@@ -19,6 +19,7 @@ import {
 } from '@shared/constants';
 
 import { Form } from './styles';
+import { IForm, loginFx } from './model';
 
 const LoginDialog: React.FC = () => {
   const [, setSearchParams] = useSearchParams();
@@ -26,13 +27,13 @@ const LoginDialog: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<IForm>();
 
   return (
     <>
       <DialogTitle>Авторизация</DialogTitle>
       <DialogContent>
-        <Form id="login" onSubmit={handleSubmit(() => {})}>
+        <Form id="login" onSubmit={handleSubmit(loginFx)}>
           <TextField
             label="Электронная почта"
             {...register('email', {

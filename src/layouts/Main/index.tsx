@@ -1,15 +1,16 @@
 import React, { Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { IconButton, Tooltip } from '@mui/material';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-
 import NavTabs from '@components/NavTabs';
 import Loading from '@components/Loading';
 import DialogView from '@components/DialogView';
+import { ToastContainer } from 'react-toastify';
+import { IconButton, Tooltip } from '@mui/material';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+
+import { DialogTypes } from '@shared/constants';
 
 import { ContentWrapper, Nav, Main } from './styles';
-import { DialogTypes } from '@shared/constants';
 
 const MainLayout: React.FC = ({ children }) => {
   const [, setSearchParams] = useSearchParams();
@@ -45,6 +46,7 @@ const MainLayout: React.FC = ({ children }) => {
         <Suspense fallback={<Loading />}>{children}</Suspense>
       </Main>
       <DialogView />
+      <ToastContainer draggable={false} />
     </ContentWrapper>
   );
 };

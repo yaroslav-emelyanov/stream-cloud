@@ -19,6 +19,7 @@ import {
 } from '@shared/constants';
 
 import { Form } from './styles';
+import { IForm, registerFx } from './model';
 
 const RegistrationDialog: React.FC = () => {
   const [, setSearchParams] = useSearchParams();
@@ -26,13 +27,13 @@ const RegistrationDialog: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<IForm>();
 
   return (
     <>
       <DialogTitle>Регистрация</DialogTitle>
       <DialogContent>
-        <Form id="registration" onSubmit={handleSubmit(() => {})}>
+        <Form id="registration" onSubmit={handleSubmit(registerFx)}>
           <TextField
             label="Электронная почта"
             {...register('email', {

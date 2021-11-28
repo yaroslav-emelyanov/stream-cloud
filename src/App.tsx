@@ -1,6 +1,7 @@
 import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
 import RouterView from './router-view';
