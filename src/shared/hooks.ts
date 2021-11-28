@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 export const useDialogState = (key: string, delay: number) => {
-  const [dialogKey, setDialogKey] = useState<string | null>('');
+  const [dialogKey, setDialogKey] = useState('');
   const [search, setSearch] = useSearchParams();
   const timeoutRef = useRef<NodeJS.Timeout>();
 
-  const param = search.get(key);
+  const param = search.get(key) || '';
 
   useEffect(() => {
     if (param) {
@@ -22,7 +22,7 @@ export const useDialogState = (key: string, delay: number) => {
 
   return {
     isOpen: Boolean(param),
-    key: dialogKey,
+    key: dialogKey || '',
     onClose: () => setSearch({ [key]: '' }),
   };
 };

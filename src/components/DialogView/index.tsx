@@ -1,15 +1,20 @@
 import React from 'react';
 
 import { Dialog } from '@mui/material';
+
+import { useIsAuthorized } from '@entities/user';
 import { DialogTypes } from '@shared/constants';
 import { useDialogState } from '@shared/hooks';
 
-import { dialogs } from './dialog.config';
+import { DIALOGS_MAP } from './constants';
 
 const DialogView = () => {
   const { isOpen, key, onClose } = useDialogState('dialog', 300);
+  const isAuthorized = useIsAuthorized();
 
-  const Component = dialogs[key as DialogTypes];
+  const Component =
+    DIALOGS_MAP[key as DialogTypes] &&
+    DIALOGS_MAP[key as DialogTypes](isAuthorized);
 
   if (!Component) {
     return null;
