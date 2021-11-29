@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useStore } from 'effector-react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 
 import {
   DialogActions,
@@ -28,6 +29,7 @@ const LoginDialog: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IForm>();
+  const loading = useStore(loginFx.pending);
 
   return (
     <>
@@ -79,7 +81,12 @@ const LoginDialog: React.FC = () => {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <LoadingButton form="login" type="submit" variant="contained">
+        <LoadingButton
+          loading={loading}
+          form="login"
+          type="submit"
+          variant="contained"
+        >
           Войти
         </LoadingButton>
       </DialogActions>
