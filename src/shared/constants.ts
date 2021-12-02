@@ -9,11 +9,32 @@ export enum DialogTypes {
 }
 
 export const FIREBASE_ERROR_MESSAGES: Record<string, string> = {
-  'auth/user-not-found': 'User is not found',
-  'auth/wrong-password': 'Wrong password',
-  'auth/email-already-in-use': 'This email is already in use',
+  'auth/user-not-found': 'Пользователь не найден',
+  'auth/wrong-password': 'Не верный пароль',
+  'auth/email-already-in-use': 'Эта электронная почта уже используется',
+};
+
+export const AXIOS_ERROR_MESSAGES: Record<number, string> = {
+  421: 'Пустой или неправильный токен',
+  429: 'Слишком много запросов',
+  400: 'Неправильный запрос',
 };
 
 export const AppMessages = {
-  DEFAULT_ERROR: 'Something went wrong',
+  DEFAULT_ERROR: 'Что то пошло не так...',
 } as const;
+
+export enum KinopoiskMonths {
+  JANUARY = 'JANUARY',
+  FEBRUARY = 'FEBRUARY',
+  MARCH = 'MARCH',
+  APRIL = 'APRIL',
+  MAY = 'MAY',
+  JUNE = 'JUNE',
+  JULY = 'JULY',
+  AUGUST = 'AUGUST',
+  SEPTEMBER = 'SEPTEMBER',
+  OCTOBER = 'OCTOBER',
+  NOVEMBER = 'NOVEMBER',
+  DECEMBER = 'DECEMBER',
+}
