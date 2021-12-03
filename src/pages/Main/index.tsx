@@ -1,5 +1,4 @@
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 import MovieCard from '@components/MovieCard';
 import { CircularProgress } from '@mui/material';
@@ -7,6 +6,7 @@ import { CircularProgress } from '@mui/material';
 import { nextPage, useMovies, useHasMorePages } from '@entities/movie';
 
 import { usePageGate } from './model';
+import { EndMessage, ProgressWrapper, InfiniteScroll } from './styles';
 
 const MainPage = () => {
   const movies = useMovies();
@@ -19,28 +19,19 @@ const MainPage = () => {
       dataLength={movies.length}
       next={nextPage}
       endMessage={
-        <p style={{ textAlign: 'center' }}>
-          <b>Yay! You have seen it all</b>
-        </p>
+        <EndMessage variant="body1" align="center">
+          Больше нет записей
+        </EndMessage>
       }
       loader={
-        <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-        >
+        <ProgressWrapper>
           <CircularProgress />
-        </div>
+        </ProgressWrapper>
       }
       hasMore={hasMore}
-      style={{
-        padding: 32,
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 16,
-        justifyContent: 'center',
-      }}
     >
       {movies.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} />
+        <MovieCard movie={movie} onClick={() => {}} key={movie.id} />
       ))}
     </InfiniteScroll>
   );

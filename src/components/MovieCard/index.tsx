@@ -14,9 +14,10 @@ import {
 
 interface MovieCardProps {
   movie: Movie;
+  onClick: () => void;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ movie, onClick }) => {
   const kinopoiskMovie = useKinopoiskMovie(movie.kinopoisk_id);
 
   const genre = kinopoiskMovie?.movieInfo?.genres[0]?.genre;
@@ -28,7 +29,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   );
 
   return (
-    <Card>
+    <Card onClick={onClick}>
       <CardActionArea>
         {kinopoiskMovie?.loading ? (
           <Skeleton variant="rectangular" />
