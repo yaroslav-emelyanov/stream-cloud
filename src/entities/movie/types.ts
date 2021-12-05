@@ -133,3 +133,14 @@ export interface KinopoiskMovieListItem {
   movieInfo: KinopoiskMovie | null;
   loading: boolean;
 }
+
+export interface KinopoiskVideo {
+  url: string;
+  name: string;
+  site: string;
+}
+
+export interface KinopoiskVideoResponse {
+  total: number;
+  items: KinopoiskVideo[];
+}

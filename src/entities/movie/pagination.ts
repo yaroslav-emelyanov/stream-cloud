@@ -2,7 +2,7 @@ import { createStore, createEvent, combine } from 'effector';
 
 export const nextPage = createEvent();
 
-export const $currentPage = createStore(1).on(
+export const $currentPage = createStore(0).on(
   nextPage,
   (prevPage) => prevPage + 1
 );

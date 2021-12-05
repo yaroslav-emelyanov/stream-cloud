@@ -2,7 +2,12 @@ import React from 'react';
 
 import { DialogTypes } from '@shared/constants';
 
-import { LoginDialog, RegistrationDialog } from '@components/Dialogs';
+import {
+  LoginDialog,
+  WatchDialog,
+  PreviewDialog,
+  RegistrationDialog,
+} from '@components/Dialogs';
 
 export const DIALOGS_MAP: Record<
   DialogTypes,
@@ -11,4 +16,7 @@ export const DIALOGS_MAP: Record<
   [DialogTypes.LOGIN]: (isAuth) => (!isAuth ? LoginDialog : null),
   [DialogTypes.REGISTERATION]: (isAuth) =>
     !isAuth ? RegistrationDialog : null,
+
+  [DialogTypes.PREVIEW]: () => PreviewDialog,
+  [DialogTypes.WATCH]: (isAuth) => (isAuth ? WatchDialog : null),
 };

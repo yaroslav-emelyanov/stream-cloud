@@ -1,9 +1,13 @@
+import { guard } from 'effector';
 import { createGate } from 'effector-react';
 
-import { getMoviesFx } from '@entities/movie';
+import { nextPage, $currentPage } from '@entities/movie';
 
 export const Page = createGate('main-page');
 
-Page.open.watch(() => {
-  getMoviesFx(1);
+guard({
+  clock: Page.open,
+  source: $currentPage,
+  filter: (page) => !page,
+  target: nextPage,
 });

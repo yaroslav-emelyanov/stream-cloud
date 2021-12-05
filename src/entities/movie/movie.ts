@@ -1,94 +1,64 @@
-import { createEffect, createEvent, createStore, guard } from 'effector';
+import { combine, createEffect, restore, sample } from 'effector';
 
 import * as api from '@shared/api';
 
 import {
+  KinopoiskMovie,
+  KinopoiskVideo,
+  KinopoiskVideoResponse,
   Movie,
   MovieResponse,
-  KinopoiskMovie,
-  KinopoiskMovieListItem,
 } from './types';
-import { AxiosError } from 'axios';
-
-import { $currentPage, $hasMorePages, $lastPage } from './pagination';
 
 const currentYear = new Date().getFullYear();
 
-export const getMoviesFx = createEffect<number, MovieResponse>((page) =>
-  api.videocdn
-    .get<MovieResponse>('/movies', {
-      params: {
-        page,
-        limit: 30,
-        year: currentYear,
-        field: 'title',
-        direction: 'desc',
-        ordering: 'last_media_accepted',
-      },
-    })
-    .then((response) => response.data)
+export const getMovieFx = createEffect<string | null, Movie | null>(
+  (kinopoiskId) =>
+    api.videocdn
+      .get<MovieResponse>('/movies', {
+        params: {
+          page: 1,
+          limit: 30,
+          year: currentYear,
+          query: kinopoiskId,
+          field: 'kinopoisk_id',
+          direction: 'desc',
+          ordering: 'last_media_accepted',
+        },
+      })
+      .then((response) => response.data.data[0])
 );
 
-export const getKinopoiskMovieFx = createEffect<
-  string,
-  KinopoiskMovie,
-  AxiosError
->((kinopoiskId) =>
-  api.kinopoisk
-    .get<KinopoiskMovie>(`/v2.2/films/${kinopoiskId}`)
-    .then((response) => response.data)
+const getKinopoisVideoFx = createEffect<string, KinopoiskVideo | null>(
+  (kinopoiskId) =>
+    api.kinopoisk
+      .get<KinopoiskVideoResponse>(`/v2.2/films/${kinopoiskId}/videos`)
+      .then(
+        (response) =>
+          response.data.items.find((item) => item.site === 'YOUTUBE') || null
+      )
 );
 
-$lastPage.on(getMoviesFx.doneData, (_, { last_page }) => last_page);
+const getKinopoiskMovieFx = createEffect<string, KinopoiskMovie>(
+  (kinopoiskId) =>
+    api.kinopoisk
+      .get<KinopoiskMovie>(`/v2.2/films/${kinopoiskId}`)
+      .then((response) => response.data)
+);
 
-guard({
-  clock: $currentPage,
-  filter: $hasMorePages,
-  target: getMoviesFx,
+sample({
+  clock: getMovieFx.doneData,
+  fn: (movie) => movie?.kinopoisk_id || '',
+  target: [getKinopoiskMovieFx, getKinopoisVideoFx],
 });
 
-export const $movies = createStore<Movie[]>([]);
+export const $movie = restore(getMovieFx.doneData, null);
+export const $video = restore(getKinopoisVideoFx.doneData, null);
+export const $kinopoiskMovie = restore(getKinopoiskMovieFx.doneData, null);
 
-$movies.on(getMoviesFx.doneData, (prevMovies, { data: movies }) => [
-  ...prevMovies,
-  ...movies,
-]);
-
-const hideLoadingByMovieId = createEvent<number>();
-
-getMoviesFx.doneData.watch(async ({ data: movies }) => {
-  for (const movie of movies) {
-    if (movie.kinopoisk_id) {
-      await getKinopoiskMovieFx(movie.kinopoisk_id).catch(() => {});
-    } else {
-      hideLoadingByMovieId(movie.id);
-    }
-  }
-});
-
-export const $kinopoiskMovies = createStore<KinopoiskMovieListItem[]>([]).on(
-  getMoviesFx.doneData,
-  (prevItems, { data: movies }) => [
-    ...prevItems,
-    ...movies.map<KinopoiskMovieListItem>((movie) => ({
-      movieId: movie.id,
-      kinopoiskId: movie.kinopoisk_id,
-      movieInfo: null,
-      loading: true,
-    })),
-  ]
+export const $currentMovieIsLoading = combine(
+  [getMovieFx.pending, getKinopoiskMovieFx.pending, getKinopoisVideoFx.pending],
+  (values) => values.some((value) => value)
 );
 
-$kinopoiskMovies
-  .on(getKinopoiskMovieFx.doneData, (movies, kinopoiskMovie) =>
-    movies.map<KinopoiskMovieListItem>((movie) =>
-      movie.kinopoiskId === kinopoiskMovie.kinopoiskId.toString()
-        ? { ...movie, movieInfo: kinopoiskMovie, loading: false }
-        : movie
-    )
-  )
-  .on(hideLoadingByMovieId, (movies, movieId) =>
-    movies.map<KinopoiskMovieListItem>((movie) =>
-      movie.movieId === movieId ? { ...movie, loading: false } : movie
-    )
-  );
+export const $currentMovie = combine([$movie, $kinopoiskMovie, $video]);

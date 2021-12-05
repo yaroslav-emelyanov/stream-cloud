@@ -1,16 +1,19 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import MovieCard from '@components/MovieCard';
 import { CircularProgress } from '@mui/material';
 
 import { nextPage, useMovies, useHasMorePages } from '@entities/movie';
+import { DialogTypes } from '@shared/constants';
 
 import { usePageGate } from './model';
 import { EndMessage, ProgressWrapper, InfiniteScroll } from './styles';
 
 const MainPage = () => {
-  const movies = useMovies();
+  const [, setSearchParams] = useSearchParams();
   const hasMore = useHasMorePages();
+  const movies = useMovies();
 
   usePageGate();
 
@@ -31,7 +34,16 @@ const MainPage = () => {
       hasMore={hasMore}
     >
       {movies.map((movie) => (
-        <MovieCard movie={movie} onClick={() => {}} key={movie.id} />
+        <MovieCard
+          movie={movie}
+          onClick={() =>
+            setSearchParams({
+              dialog: DialogTypes.PREVIEW,
+              kinopoisk_id: movie.kinopoisk_id,
+            })
+          }
+          key={movie.id}
+        />
       ))}
     </InfiniteScroll>
   );

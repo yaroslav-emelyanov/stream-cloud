@@ -23,6 +23,6 @@ export const useDialogState = (key: string, delay: number) => {
   return {
     isOpen: Boolean(param),
     key: dialogKey || '',
-    onClose: () => setSearch({ [key]: '' }),
+    onClose: () => setSearch({}),
   };
 };

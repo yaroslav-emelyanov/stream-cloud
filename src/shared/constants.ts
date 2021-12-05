@@ -3,9 +3,15 @@ export const EMAIL_REGEX =
 
 export const PASSWORD_MIN_LENGTH = 6;
 
+export const YOUTUBE_REGEX =
+  // eslint-disable-next-line
+  /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+
 export enum DialogTypes {
   LOGIN = 'login',
   REGISTERATION = 'registration',
+  PREVIEW = 'preview',
+  WATCH = 'watch',
 }
 
 export const FIREBASE_ERROR_MESSAGES: Record<string, string> = {
