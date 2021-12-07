@@ -2,9 +2,9 @@ import { colors, styled } from '@mui/material';
 
 import {
   Card as MuiCard,
-  CardActionArea as MuiCardActionArea,
   Skeleton as MuiSkeleton,
   CardContent as MuiCardContent,
+  CardActionArea as MuiCardActionArea,
 } from '@mui/material';
 
 export const HEIGHT_CARD_MEDIA = 240;
