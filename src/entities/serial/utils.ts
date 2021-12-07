@@ -5,10 +5,10 @@ export const watchSerial = (clock: Unit<string | null>) => {
   const getCurrentSerial = sample({
     clock,
     source: $serial,
-    fn: (movie, kinopoisk_id) => ({ kinopoisk_id, movie }),
+    fn: (serial, kinopoisk_id) => ({ kinopoisk_id, serial }),
   });
 
-  const getCurrentMovieFx = attach({
+  const getCurrentSerialFx = attach({
     effect: getSerialFx,
     mapParams: (params: Parameters<typeof getCurrentSerial>[0]) =>
       params?.kinopoisk_id || null,
@@ -16,7 +16,7 @@ export const watchSerial = (clock: Unit<string | null>) => {
 
   guard({
     clock: getCurrentSerial,
-    filter: ({ kinopoisk_id, movie }) => movie?.kinopoisk_id !== kinopoisk_id,
-    target: getCurrentMovieFx,
+    filter: ({ kinopoisk_id, serial }) => serial?.kinopoisk_id !== kinopoisk_id,
+    target: getCurrentSerialFx,
   });
 };

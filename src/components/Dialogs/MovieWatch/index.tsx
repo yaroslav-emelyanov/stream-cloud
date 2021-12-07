@@ -2,7 +2,7 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useCurrentMovie, useCurrentMovieIsLoading } from '@entities/movie';
-import { DialogTypes } from '@shared/constants';
+import { ContentTypes, DialogTypes } from '@shared/constants';
 
 import {
   Button,
@@ -15,7 +15,7 @@ import {
 import { useDialogGate } from './model';
 import { SkeletonWatch, WATCH_HEIGHT } from './styles';
 
-const WatchDialog = () => {
+const MovieWatchDialog = () => {
   const [search, setSearchParams] = useSearchParams();
   const isLoading = useCurrentMovieIsLoading();
   const [movie] = useCurrentMovie();
@@ -56,6 +56,7 @@ const WatchDialog = () => {
           onClick={() =>
             setSearchParams({
               dialog: DialogTypes.PREVIEW,
+              type: ContentTypes.MOVIE,
               kinopoisk_id: movie?.kinopoisk_id || '',
             })
           }
@@ -68,4 +69,4 @@ const WatchDialog = () => {
   );
 };
 
-export default WatchDialog;
+export default MovieWatchDialog;

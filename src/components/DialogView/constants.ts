@@ -4,7 +4,8 @@ import { DialogTypes, ContentTypes } from '@shared/constants';
 
 import {
   LoginDialog,
-  WatchDialog,
+  MovieWatchDialog,
+  SerialWatchDialog,
   MoviePreviewDialog,
   RegistrationDialog,
   SerialPreviewDialog,
@@ -13,6 +14,11 @@ import {
 const PREVIEW_DIALOGS: Record<ContentTypes, React.FC> = {
   [ContentTypes.MOVIE]: MoviePreviewDialog,
   [ContentTypes.SERIAL]: SerialPreviewDialog,
+};
+
+const WATCH_DIALOGS: Record<ContentTypes, React.FC> = {
+  [ContentTypes.MOVIE]: MovieWatchDialog,
+  [ContentTypes.SERIAL]: SerialWatchDialog,
 };
 
 export const DIALOGS_MAP: Record<
@@ -24,5 +30,6 @@ export const DIALOGS_MAP: Record<
     !isAuth ? RegistrationDialog : null,
   [DialogTypes.PREVIEW]: (_, params) =>
     PREVIEW_DIALOGS[params.get('type') as ContentTypes],
-  [DialogTypes.WATCH]: (isAuth) => (isAuth ? WatchDialog : null),
+  [DialogTypes.WATCH]: (isAuth, params) =>
+    isAuth ? WATCH_DIALOGS[params.get('type') as ContentTypes] : null,
 };

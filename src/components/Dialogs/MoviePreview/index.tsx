@@ -14,9 +14,9 @@ import LockIcon from '@mui/icons-material/Lock';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import { useCurrentMovie, useCurrentMovieIsLoading } from '@entities/movie';
+import { ContentTypes, DialogTypes } from '@shared/constants';
 import { parseIdYouTubeUrl } from '@shared/utils';
 import { useIsAuthorized } from '@entities/user';
-import { DialogTypes } from '@shared/constants';
 
 import { useDialogGate } from './model';
 import { NotFoundPreview, PREVIEW_HEIGHT, SkeletonPreview } from './styles';
@@ -81,6 +81,7 @@ const MoviePreviewDialog = () => {
               onClick={() =>
                 setSearchParams({
                   dialog: DialogTypes.WATCH,
+                  type: ContentTypes.MOVIE,
                   kinopoisk_id: movie?.kinopoisk_id || '',
                 })
               }
