@@ -2,7 +2,7 @@ import { createEffect, createEvent, createStore } from 'effector';
 
 import * as api from '@shared/api';
 
-import { getSerialsFx } from './serial';
+import { getSerialsFx } from './serials';
 import { KinopoiskMovie, KinopoiskMovieListItem } from './types';
 
 export const getKinopoiskMovieFx = createEffect<string, KinopoiskMovie>(

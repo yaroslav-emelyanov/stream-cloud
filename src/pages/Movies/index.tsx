@@ -5,7 +5,7 @@ import MovieCard from '@components/MovieCard';
 import { CircularProgress } from '@mui/material';
 
 import { pagination, useMovies, useHasMorePages } from '@entities/movie';
-import { DialogTypes } from '@shared/constants';
+import { ContentTypes, DialogTypes } from '@shared/constants';
 
 import { usePageGate } from './model';
 import { EndMessage, ProgressWrapper, InfiniteScroll } from './styles';
@@ -39,6 +39,7 @@ const MoviesPage = () => {
           onClick={() =>
             setSearchParams({
               dialog: DialogTypes.PREVIEW,
+              type: ContentTypes.MOVIE,
               kinopoisk_id: movie.kinopoisk_id,
             })
           }

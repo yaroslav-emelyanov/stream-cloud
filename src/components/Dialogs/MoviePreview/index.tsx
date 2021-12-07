@@ -21,7 +21,7 @@ import { DialogTypes } from '@shared/constants';
 import { useDialogGate } from './model';
 import { NotFoundPreview, PREVIEW_HEIGHT, SkeletonPreview } from './styles';
 
-const PreviewDialog = () => {
+const MoviePreviewDialog = () => {
   const [movie, kinopoisk, video] = useCurrentMovie();
   const [search, setSearchParams] = useSearchParams();
   const isLoading = useCurrentMovieIsLoading();
@@ -96,4 +96,4 @@ const PreviewDialog = () => {
   );
 };
 
-export default PreviewDialog;
+export default MoviePreviewDialog;
