@@ -14,7 +14,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const kinopoiskMovie = useKinopoiskMovie(movie.kinopoisk_id);
   const [, setSearchParams] = useSearchParams();
 
-  const genre = kinopoiskMovie?.movieInfo?.genres[0]?.genre;
+  const genre = kinopoiskMovie?.info?.genres[0]?.genre;
 
   const description = useMemo(
     () =>
@@ -34,7 +34,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       title={movie.ru_title}
       description={description}
       loading={kinopoiskMovie?.loading}
-      posterUrl={kinopoiskMovie?.movieInfo?.posterUrlPreview}
+      posterUrl={kinopoiskMovie?.info?.posterUrlPreview}
     />
   );
 };

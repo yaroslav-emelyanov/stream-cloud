@@ -22,6 +22,8 @@ export const getMoviesFx = createEffect<number, VCDNResponse<Movie>>((page) =>
     .then((response) => response.data)
 );
 
+export const $kinopoiskMovies = utils.createKinopoiskMovies(getMoviesFx);
+
 export const pagination = utils.createVCDNPagination(getMoviesFx);
 
 export const $movies = createStore<Movie[]>([]);

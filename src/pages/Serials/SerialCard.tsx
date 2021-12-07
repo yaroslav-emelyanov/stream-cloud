@@ -14,7 +14,7 @@ const SerialCard: React.FC<MovieCardProps> = ({ serial }) => {
   const kinopoiskSerial = useKinopoiskSerial(serial.kinopoisk_id);
   const [, setSearchParams] = useSearchParams();
 
-  const genre = kinopoiskSerial?.movieInfo?.genres[0]?.genre;
+  const genre = kinopoiskSerial?.info?.genres[0]?.genre;
 
   const description = useMemo(
     () =>
@@ -36,7 +36,7 @@ const SerialCard: React.FC<MovieCardProps> = ({ serial }) => {
       title={serial.ru_title}
       description={description}
       loading={kinopoiskSerial?.loading}
-      posterUrl={kinopoiskSerial?.movieInfo?.posterUrlPreview}
+      posterUrl={kinopoiskSerial?.info?.posterUrlPreview}
     />
   );
 };

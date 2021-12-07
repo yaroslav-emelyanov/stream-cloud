@@ -1,7 +1,6 @@
 import { useStore, useStoreMap } from 'effector-react';
 
-import { $serials, pagination } from './serials';
-import { $kinopoiskSerials } from './kinopoisk';
+import { $serials, $kinopoiskSerials, pagination } from './serials';
 import { $currentSerial, $currentMovieIsLoading } from './serial';
 
 export const useSerials = () => useStore($serials);

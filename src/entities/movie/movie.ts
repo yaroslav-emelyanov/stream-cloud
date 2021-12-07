@@ -1,14 +1,14 @@
 import { combine, createEffect, restore, sample } from 'effector';
 
 import * as api from '@shared/api';
-import { VCDNResponse } from '@shared/types';
-
 import {
+  VCDNResponse,
   KinopoiskMovie,
   KinopoiskVideo,
   KinopoiskVideoResponse,
-  Movie,
-} from './types';
+} from '@shared/types';
+
+import { Movie } from './types';
 
 const currentYear = new Date().getFullYear();
 

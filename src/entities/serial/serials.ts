@@ -29,4 +29,6 @@ $serials.on(getSerialsFx.doneData, (prevSerials, { data: serials }) => [
   ...serials,
 ]);
 
+export const $kinopoiskSerials = utils.createKinopoiskMovies(getSerialsFx);
+
 export const pagination = utils.createVCDNPagination(getSerialsFx);
