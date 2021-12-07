@@ -4,13 +4,13 @@ import * as api from '@shared/api';
 import * as utils from '@shared/utils';
 import { VCDNResponse } from '@shared/types';
 
-import { Movie } from './types';
+import { Serial } from './types';
 
 const currentYear = new Date().getFullYear();
 
-export const getMoviesFx = createEffect<number, VCDNResponse<Movie>>((page) =>
+export const getSerialsFx = createEffect<number, VCDNResponse<Serial>>((page) =>
   api.videocdn
-    .get<VCDNResponse<Movie>>('/movies', {
+    .get<VCDNResponse<Serial>>('/tv-series', {
       params: {
         page,
         limit: 30,
@@ -22,11 +22,11 @@ export const getMoviesFx = createEffect<number, VCDNResponse<Movie>>((page) =>
     .then((response) => response.data)
 );
 
-export const pagination = utils.createVCDNPagination(getMoviesFx);
+export const $serials = createStore<Serial[]>([]);
 
-export const $movies = createStore<Movie[]>([]);
-
-$movies.on(getMoviesFx.doneData, (prevMovies, { data: movies }) => [
-  ...prevMovies,
-  ...movies,
+$serials.on(getSerialsFx.doneData, (prevSerials, { data: serials }) => [
+  ...prevSerials,
+  ...serials,
 ]);
+
+export const pagination = utils.createVCDNPagination(getSerialsFx);

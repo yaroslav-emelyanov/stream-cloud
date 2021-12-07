@@ -1,16 +1,10 @@
-type ContentType = 'movie' | 'anime';
-
-interface Quality {
-  id: number;
-  url: string;
-  resolution: number;
-  media_id: number;
-}
-
-interface Translation {
+interface SerialTranslate {
   id: number;
   title: string;
   priority: number;
+  episodes_count: number;
+  source_quality: string;
+  max_quality: number;
   iframe_src: string;
   iframe: string;
   short_title: string;
@@ -18,43 +12,61 @@ interface Translation {
   shorter_title: string;
 }
 
-interface Media {
+interface SerialEpisodeMedia {
   id: number;
   translation_id: number;
   content_id: number;
-  content_type: ContentType;
-  tv_series_id: null;
+  content_type: string;
+  tv_series_id: number;
   source_quality: string;
   max_quality: number;
   path: string;
   duration: number;
   created: string;
   accepted: string;
-  deleted_at: null;
-  blocked: 0;
-  qualities: Quality[];
-  translation: Translation;
+  deleted_at: string | null;
+  blocked: number;
 }
 
-export interface Movie {
-  blocked: number;
-  content_type: ContentType;
-  created: string;
-  default_media_id: null;
+interface SerialEpisode {
   id: number;
-  iframe: string;
-  iframe_src: string;
+  tv_series_id: number;
+  season_id: number;
+  num: string;
+  season_num: number;
+  ru_title: string;
+  orig_title: string;
   imdb_id: string;
   kinopoisk_id: string;
-  last_media_accepted: string;
-  media: Media[];
-  orig_title: string;
-  ru_title: string;
-  preview_iframe_src: string;
   released: string;
-  translations: Translation[];
+  ru_released: string;
+  created: string;
+  media: SerialEpisodeMedia[];
+  translation: SerialTranslate;
+}
+
+export interface Serial {
+  id: number;
+  ru_title: string;
+  orig_title: string;
+  imdb_id: string;
+  kinopoisk_id: string;
+  season_count: number;
+  episode_count: number;
+  last_episode_id: number;
+  start_date: string;
+  end_date: string | null;
+  created: string;
   updated: string;
-  year: string;
+  blocked: number;
+  content_id: number | null;
+  content_type: string;
+  country_id: number | null;
+  preview_iframe_src: string;
+  iframe_src: string;
+  iframe: string;
+  translations: SerialTranslate[];
+  episodes: SerialEpisode[];
 }
 
 interface KinopoiskCountry {

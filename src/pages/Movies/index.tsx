@@ -10,7 +10,7 @@ import { DialogTypes } from '@shared/constants';
 import { usePageGate } from './model';
 import { EndMessage, ProgressWrapper, InfiniteScroll } from './styles';
 
-const MainPage = () => {
+const MoviesPage = () => {
   const [, setSearchParams] = useSearchParams();
   const hasMore = useHasMorePages();
   const movies = useMovies();
@@ -49,4 +49,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default MoviesPage;

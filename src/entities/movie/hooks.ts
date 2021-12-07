@@ -1,12 +1,12 @@
 import { useStore, useStoreMap } from 'effector-react';
 
-import { $movies, $kinopoiskMovies } from './movies';
+import { $movies, pagination } from './movies';
+import { $kinopoiskMovies } from './kinopoisk';
 import { $currentMovie, $currentMovieIsLoading } from './movie';
-import { $hasMorePages } from './pagination';
 
 export const useMovies = () => useStore($movies);
 
-export const useHasMorePages = () => useStore($hasMorePages);
+export const useHasMorePages = () => useStore(pagination.$hasMorePages);
 
 export const useKinopoiskMovie = (kinopoiskId: string) =>
   useStoreMap({

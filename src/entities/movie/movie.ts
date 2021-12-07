@@ -1,13 +1,13 @@
 import { combine, createEffect, restore, sample } from 'effector';
 
 import * as api from '@shared/api';
+import { VCDNResponse } from '@shared/types';
 
 import {
   KinopoiskMovie,
   KinopoiskVideo,
   KinopoiskVideoResponse,
   Movie,
-  MovieResponse,
 } from './types';
 
 const currentYear = new Date().getFullYear();
@@ -15,7 +15,7 @@ const currentYear = new Date().getFullYear();
 export const getMovieFx = createEffect<string | null, Movie | null>(
   (kinopoiskId) =>
     api.videocdn
-      .get<MovieResponse>('/movies', {
+      .get<VCDNResponse<Movie>>('/movies', {
         params: {
           page: 1,
           limit: 30,

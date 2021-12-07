@@ -3,7 +3,7 @@ import { createGate } from 'effector-react';
 
 import { pagination } from '@entities/movie';
 
-export const Page = createGate('main-page');
+export const Page = createGate('movies-page');
 
 guard({
   clock: Page.open,
