@@ -11,10 +11,16 @@ export const ProgressWrapper = styled(Typography)(() => ({
   justifyContent: 'center',
 }));
 
+export const InfiniteScrollContainer = styled('div')({
+  height: '100%',
+  overflow: 'auto',
+});
+
 export const InfiniteScroll = styled(OriginalInfiniteScroll)(({ theme }) => ({
   padding: theme.spacing(4),
   display: 'flex',
   flexWrap: 'wrap',
   gap: theme.spacing(2),
   justifyContent: 'center',
+  height: '100%',
 }));

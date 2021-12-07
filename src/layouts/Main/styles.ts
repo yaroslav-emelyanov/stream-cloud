@@ -18,4 +18,5 @@ export const Nav = styled('nav')(({ theme }) => ({
 
 export const Main = styled('main')(() => ({
   flex: 1,
+  overflow: 'auto',
 }));

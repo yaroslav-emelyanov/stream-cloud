@@ -2,10 +2,9 @@ import React from 'react';
 
 import { useSerials, useHasMorePages, pagination } from '@entities/serial';
 
-import { CircularProgress } from '@mui/material';
+import InfiniteScroll from '@components/InfiniteScroll';
 
 import { useSerialsGate } from './model';
-import { EndMessage, ProgressWrapper, InfiniteScroll } from './styles';
 
 import SerialCard from './SerialCard';
 
@@ -19,16 +18,6 @@ const SerialsPage = () => {
     <InfiniteScroll
       dataLength={serials.length}
       next={pagination.nextPage}
-      endMessage={
-        <EndMessage variant="body1" align="center">
-          Больше нет записей
-        </EndMessage>
-      }
-      loader={
-        <ProgressWrapper>
-          <CircularProgress />
-        </ProgressWrapper>
-      }
       hasMore={hasMore}
     >
       {serials.map((serial) => (
