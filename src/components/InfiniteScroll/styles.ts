@@ -1,4 +1,3 @@
-import OriginalInfiniteScroll from 'react-infinite-scroll-component';
 import { styled, Typography } from '@mui/material';
 
 export const EndMessage = styled(Typography)(() => ({
@@ -11,18 +10,15 @@ export const ProgressWrapper = styled(Typography)(() => ({
   justifyContent: 'center',
 }));
 
-export const InfiniteScrollContainer = styled('div')({
+export const InfiniteScrollContainer = styled('div')(({ theme }) => ({
   height: '100%',
   overflow: 'auto',
-});
-
-export const InfiniteScroll = styled(OriginalInfiniteScroll)(({ theme }) => ({
   padding: theme.spacing(4),
   display: 'flex',
   flexWrap: 'wrap',
   gap: theme.spacing(2),
   justifyContent: 'center',
-  height: '100%',
+  alignItems: 'flex-start',
 }));
 
 export const Filters = styled('div')(({ theme }) => ({

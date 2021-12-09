@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
 
 import { CircularProgress, Slide, useScrollTrigger } from '@mui/material';
 
@@ -7,24 +8,31 @@ import {
   EndMessage,
   ProgressWrapper,
   InfiniteScrollContainer,
-  InfiniteScroll as InfiniteScrollOriginal,
 } from './styles';
 
 interface InfiniteScrollProps {
-  dataLength: number;
+  loading: boolean;
   hasMore: boolean;
-  next: () => any;
+  loadMore: () => any;
   filters?: React.ReactNode;
   children?: React.ReactNode;
 }
 
 const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
-  dataLength,
-  next,
+  loading,
+  loadMore,
   hasMore,
   children,
   filters,
 }) => {
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage: hasMore,
+    onLoadMore: loadMore,
+    delayInMs: 250,
+    rootMargin: '0px',
+  });
+
   const [scrollTarget, setScrollTarget] = useState<Node | Window | undefined>(
     undefined
   );
@@ -32,7 +40,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
 
   return (
     <InfiniteScrollContainer
-      id="scrollable-container-id"
+      style={{ paddingTop: filters ? 0 : undefined }}
       ref={(node) => {
         if (node) {
           setScrollTarget(node);
@@ -44,25 +52,20 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
           <Filters>{filters}</Filters>
         </Slide>
       )}
-      <InfiniteScrollOriginal
-        style={{ paddingTop: filters ? 0 : undefined }}
-        dataLength={dataLength}
-        next={next}
-        scrollableTarget="scrollable-container-id"
-        endMessage={
-          <EndMessage variant="body1" align="center">
-            Больше нет записей
-          </EndMessage>
-        }
-        loader={
-          <ProgressWrapper>
-            <CircularProgress />
-          </ProgressWrapper>
-        }
-        hasMore={hasMore}
-      >
-        {children}
-      </InfiniteScrollOriginal>
+
+      {children}
+
+      {(loading || hasMore) && (
+        <ProgressWrapper ref={sentryRef}>
+          <CircularProgress />
+        </ProgressWrapper>
+      )}
+
+      {!loading && !hasMore && (
+        <EndMessage variant="body1" align="center">
+          Больше нет записей
+        </EndMessage>
+      )}
     </InfiniteScrollContainer>
   );
 };

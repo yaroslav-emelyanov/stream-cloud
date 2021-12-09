@@ -1,30 +1,36 @@
 import { createEffect, createStore } from 'effector';
 
+import dayjs from 'dayjs';
+
 import * as api from '@shared/api';
 import * as utils from '@shared/utils';
 import { VCDNResponse } from '@shared/types';
 
 import { Movie } from './types';
 
-const currentYear = new Date().getFullYear();
+export interface GetMoviesParams {
+  page: number;
+  query?: string;
+  year?: Date | null;
+}
 
-export const getMoviesFx = createEffect<number, VCDNResponse<Movie>>((page) =>
-  api.videocdn
-    .get<VCDNResponse<Movie>>('/movies', {
-      params: {
-        page,
-        limit: 30,
-        year: currentYear,
-        direction: 'desc',
-        ordering: 'released',
-      },
-    })
-    .then((response) => response.data)
+export const getMoviesFx = createEffect<GetMoviesParams, VCDNResponse<Movie>>(
+  ({ page, query, year }) =>
+    api.videocdn
+      .get<VCDNResponse<Movie>>('/movies', {
+        params: {
+          page,
+          query,
+          year: year ? dayjs(year).year() : year,
+          limit: 30,
+          direction: 'desc',
+          ordering: 'released',
+        },
+      })
+      .then((response) => response.data)
 );
 
 export const $kinopoiskMovies = utils.createKinopoiskMovies(getMoviesFx);
-
-export const pagination = utils.createVCDNPagination(getMoviesFx);
 
 export const $movies = createStore<Movie[]>([]);
 

@@ -1,14 +1,21 @@
 import React from 'react';
 
-import { useSerials, useHasMorePages, pagination } from '@entities/serial';
+import {
+  pagination,
+  useSerials,
+  useHasMorePages,
+  useIsLoadingSerials,
+} from '@entities/serial';
 
 import InfiniteScroll from '@components/InfiniteScroll';
 
 import { useSerialsGate } from './model';
 
 import SerialCard from './SerialCard';
+import Filters from './Filters';
 
 const SerialsPage = () => {
+  const isLoading = useIsLoadingSerials();
   const hasMore = useHasMorePages();
   const serials = useSerials();
 
@@ -16,9 +23,10 @@ const SerialsPage = () => {
 
   return (
     <InfiniteScroll
-      dataLength={serials.length}
-      next={pagination.nextPage}
       hasMore={hasMore}
+      loading={isLoading}
+      filters={<Filters />}
+      loadMore={pagination.nextPage}
     >
       {serials.map((serial) => (
         <SerialCard serial={serial} key={serial.id} />

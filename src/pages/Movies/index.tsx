@@ -2,7 +2,12 @@ import React from 'react';
 
 import InfiniteScroll from '@components/InfiniteScroll';
 
-import { pagination, useMovies, useHasMorePages } from '@entities/movie';
+import {
+  useMovies,
+  pagination,
+  useHasMorePages,
+  useIsLoadingMovies,
+} from '@entities/movie';
 
 import { usePageGate } from './model';
 
@@ -10,6 +15,7 @@ import MovieCard from './MovieCard';
 import Filters from './Filters';
 
 const MoviesPage = () => {
+  const isLoading = useIsLoadingMovies();
   const hasMore = useHasMorePages();
   const movies = useMovies();
 
@@ -18,8 +24,8 @@ const MoviesPage = () => {
   return (
     <>
       <InfiniteScroll
-        dataLength={movies.length}
-        next={pagination.nextPage}
+        loading={isLoading}
+        loadMore={pagination.nextPage}
         hasMore={hasMore}
         filters={<Filters />}
       >

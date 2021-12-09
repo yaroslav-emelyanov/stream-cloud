@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Button, IconButton, InputAdornment } from '@mui/material';
 
-import { filters, useFilters } from '@entities/movie';
+import { filters, useFilters } from '@entities/serial';
 
 const Filters = () => {
   const { query, year } = useFilters();
@@ -33,8 +33,11 @@ const Filters = () => {
       />
       <DatePicker
         views={['year']}
-        InputProps={{ size: 'small' }}
+        InputProps={{
+          size: 'small',
+        }}
         value={year}
+        clearable
         onChange={filters.setYear}
         renderInput={(params) => <TextField {...params} helperText={null} />}
       />

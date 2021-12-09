@@ -8,6 +8,6 @@ export const Page = createGate('serials-page');
 guard({
   clock: Page.open,
   source: pagination.$currentPage,
-  filter: (page) => !page,
+  filter: (page) => page === 0,
   target: pagination.nextPage,
 });

@@ -3,3 +3,5 @@ export * from './types';
 export * from './hooks';
 export * from './movie';
 export * from './utils';
+export * from './filters';
+export * from './pagination';

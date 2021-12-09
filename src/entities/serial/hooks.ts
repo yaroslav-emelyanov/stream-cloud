@@ -1,9 +1,15 @@
 import { useStore, useStoreMap } from 'effector-react';
 
-import { $serials, $kinopoiskSerials, pagination } from './serials';
+import { $serials, getSerialsFx, $kinopoiskSerials } from './serials';
 import { $currentSerial, $currentMovieIsLoading } from './serial';
+import { pagination } from './pagination';
+import { $filters } from './filters';
 
 export const useSerials = () => useStore($serials);
+
+export const useIsLoadingSerials = () => useStore(getSerialsFx.pending);
+
+export const useFilters = () => useStore($filters);
 
 export const useHasMorePages = () => useStore(pagination.$hasMorePages);
 
