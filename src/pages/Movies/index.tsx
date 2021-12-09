@@ -7,6 +7,7 @@ import { pagination, useMovies, useHasMorePages } from '@entities/movie';
 import { usePageGate } from './model';
 
 import MovieCard from './MovieCard';
+import Filters from './Filters';
 
 const MoviesPage = () => {
   const hasMore = useHasMorePages();
@@ -15,15 +16,18 @@ const MoviesPage = () => {
   usePageGate();
 
   return (
-    <InfiniteScroll
-      dataLength={movies.length}
-      next={pagination.nextPage}
-      hasMore={hasMore}
-    >
-      {movies.map((movie) => (
-        <MovieCard movie={movie} key={movie.id} />
-      ))}
-    </InfiniteScroll>
+    <>
+      <InfiniteScroll
+        dataLength={movies.length}
+        next={pagination.nextPage}
+        hasMore={hasMore}
+        filters={<Filters />}
+      >
+        {movies.map((movie) => (
+          <MovieCard movie={movie} key={movie.id} />
+        ))}
+      </InfiniteScroll>
+    </>
   );
 };
 

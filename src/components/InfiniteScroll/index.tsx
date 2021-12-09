@@ -1,7 +1,9 @@
-import { CircularProgress } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
+
+import { CircularProgress, Slide, useScrollTrigger } from '@mui/material';
 
 import {
+  Filters,
   EndMessage,
   ProgressWrapper,
   InfiniteScrollContainer,
@@ -12,6 +14,8 @@ interface InfiniteScrollProps {
   dataLength: number;
   hasMore: boolean;
   next: () => any;
+  filters?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
@@ -19,10 +23,29 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   next,
   hasMore,
   children,
+  filters,
 }) => {
+  const [scrollTarget, setScrollTarget] = useState<Node | Window | undefined>(
+    undefined
+  );
+  const trigger = useScrollTrigger({ target: scrollTarget });
+
   return (
-    <InfiniteScrollContainer id="scrollable-container-id">
+    <InfiniteScrollContainer
+      id="scrollable-container-id"
+      ref={(node) => {
+        if (node) {
+          setScrollTarget(node);
+        }
+      }}
+    >
+      {filters && (
+        <Slide direction="down" in={!trigger}>
+          <Filters>{filters}</Filters>
+        </Slide>
+      )}
       <InfiniteScrollOriginal
+        style={{ paddingTop: filters ? 0 : undefined }}
         dataLength={dataLength}
         next={next}
         scrollableTarget="scrollable-container-id"
