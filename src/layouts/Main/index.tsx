@@ -5,14 +5,14 @@ import { useSearchParams } from 'react-router-dom';
 import NavTabs from '@components/NavTabs';
 import Loading from '@components/Loading';
 import DialogView from '@components/DialogView';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { IconButton, Tooltip } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 import IconButtonMenu from '@components/IconButtonMenu';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import { DialogTypes } from '@shared/constants';
-import { useIsAuthorized } from '@entities/user';
+import { useIsAuthorized, useUser } from '@entities/user';
 
 import { ContentWrapper, Nav, Main } from './styles';
 import { logoutFx } from './model';
@@ -20,6 +20,7 @@ import { logoutFx } from './model';
 const MainLayout: React.FC = ({ children }) => {
   const [, setSearchParams] = useSearchParams();
   const isAuthorized = useIsAuthorized();
+  const user = useUser();
 
   return (
     <ContentWrapper>
@@ -44,6 +45,11 @@ const MainLayout: React.FC = ({ children }) => {
           <IconButtonMenu
             icon={<AccountCircleIcon />}
             list={[
+              {
+                label: user?.email || '',
+                disabled: true,
+                onClick: logoutFx,
+              },
               {
                 label: 'Выйти',
                 icon: <LogoutIcon fontSize="small" />,

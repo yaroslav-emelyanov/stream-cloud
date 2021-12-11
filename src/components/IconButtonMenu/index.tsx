@@ -3,9 +3,10 @@ import React, { useCallback } from 'react';
 import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 
 interface IMenu {
-  icon: React.ReactNode;
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
+  icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 interface IMenuProps {
@@ -35,8 +36,12 @@ const IconButtonMenu: React.FC<IMenuProps> = ({ icon, list }) => {
         onClick={handleClose}
       >
         {list.map((item) => (
-          <MenuItem onClick={item.onClick} key={item.label}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
+          <MenuItem
+            onClick={item.onClick}
+            disabled={item.disabled}
+            key={item.label}
+          >
+            {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
             {item.label}
           </MenuItem>
         ))}
