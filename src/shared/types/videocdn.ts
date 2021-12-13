@@ -1,5 +1,3 @@
-import { ContentTypes } from '@shared/constants';
-
 export interface VCDNResponse<T> {
   current_page: number;
   data: T[];
@@ -24,7 +22,7 @@ export interface VCDNShortData {
   kp_id: string;
   imdb_id: string;
   world_art_id: string | null;
-  type: ContentTypes;
+  type: string;
   add: string;
   year: string;
   translations: string[];

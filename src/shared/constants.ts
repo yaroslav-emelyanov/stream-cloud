@@ -14,11 +14,6 @@ export enum DialogTypes {
   WATCH = 'watch',
 }
 
-export enum ContentTypes {
-  MOVIE = 'movie',
-  SERIAL = 'serial',
-}
-
 export const FIREBASE_ERROR_MESSAGES: Record<string, string> = {
   'auth/user-not-found': 'Пользователь не найден',
   'auth/wrong-password': 'Не верный пароль',

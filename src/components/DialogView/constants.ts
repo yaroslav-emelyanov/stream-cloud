@@ -1,25 +1,13 @@
 import React from 'react';
 
-import { DialogTypes, ContentTypes } from '@shared/constants';
+import { DialogTypes } from '@shared/constants';
 
 import {
   LoginDialog,
-  MovieWatchDialog,
-  SerialWatchDialog,
-  MoviePreviewDialog,
+  WatchDialog,
+  PreviewDialog,
   RegistrationDialog,
-  SerialPreviewDialog,
 } from '@components/Dialogs';
-
-const PREVIEW_DIALOGS: Record<ContentTypes, React.FC> = {
-  [ContentTypes.MOVIE]: MoviePreviewDialog,
-  [ContentTypes.SERIAL]: SerialPreviewDialog,
-};
-
-const WATCH_DIALOGS: Record<ContentTypes, React.FC> = {
-  [ContentTypes.MOVIE]: MovieWatchDialog,
-  [ContentTypes.SERIAL]: SerialWatchDialog,
-};
 
 export const DIALOGS_MAP: Record<
   DialogTypes,
@@ -28,8 +16,6 @@ export const DIALOGS_MAP: Record<
   [DialogTypes.LOGIN]: (isAuth) => (!isAuth ? LoginDialog : null),
   [DialogTypes.REGISTERATION]: (isAuth) =>
     !isAuth ? RegistrationDialog : null,
-  [DialogTypes.PREVIEW]: (_, params) =>
-    PREVIEW_DIALOGS[params.get('type') as ContentTypes],
-  [DialogTypes.WATCH]: (isAuth, params) =>
-    isAuth ? WATCH_DIALOGS[params.get('type') as ContentTypes] : null,
+  [DialogTypes.PREVIEW]: () => PreviewDialog,
+  [DialogTypes.WATCH]: (isAuth) => (isAuth ? WatchDialog : null),
 };

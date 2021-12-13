@@ -58,7 +58,7 @@ export interface KinopoiskMovieListItem {
   loading: boolean;
 }
 
-export interface KinopoiskVideo {
+export interface KinopoiskTrailer {
   url: string;
   name: string;
   site: string;

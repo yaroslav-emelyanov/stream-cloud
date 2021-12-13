@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { ContentTypes, DialogTypes } from '@shared/constants';
+import { DialogTypes } from '@shared/constants';
 import { Serial, useKinopoiskSerial } from '@entities/serial';
 
 import Card from '@components/Card';
@@ -28,7 +28,6 @@ const SerialCard: React.FC<MovieCardProps> = ({ serial }) => {
     <Card
       onClick={() =>
         setSearchParams({
-          type: ContentTypes.SERIAL,
           dialog: DialogTypes.PREVIEW,
           kinopoisk_id: serial.kinopoisk_id,
         })

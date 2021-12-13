@@ -1,7 +1,7 @@
 import { createGate } from 'effector-react';
 
-import { watchMovie } from '@entities/movie';
+import { watchDialogMovie } from '@entities/dialog-movie';
 
 export const Dialog = createGate<string | null>('movie-watch-dialog');
 
-watchMovie(Dialog.open);
+watchDialogMovie(Dialog.open);

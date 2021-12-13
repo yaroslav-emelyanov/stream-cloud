@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Movie, useKinopoiskMovie } from '@entities/movie';
-import { ContentTypes, DialogTypes } from '@shared/constants';
+import { DialogTypes } from '@shared/constants';
 
 import Card from '@components/Card';
 
@@ -27,7 +27,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       onClick={() =>
         setSearchParams({
           dialog: DialogTypes.PREVIEW,
-          type: ContentTypes.MOVIE,
           kinopoisk_id: movie.kinopoisk_id,
         })
       }

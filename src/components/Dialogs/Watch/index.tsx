@@ -1,8 +1,11 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useCurrentMovie, useCurrentMovieIsLoading } from '@entities/movie';
-import { ContentTypes, DialogTypes } from '@shared/constants';
+import {
+  useDialogMovie,
+  useDialogMovieIsLoading,
+} from '@entities/dialog-movie';
+import { DialogTypes } from '@shared/constants';
 
 import {
   Button,
@@ -15,10 +18,10 @@ import {
 import { useDialogGate } from './model';
 import { SkeletonWatch, WATCH_HEIGHT } from './styles';
 
-const MovieWatchDialog = () => {
+const WatchDialog = () => {
   const [search, setSearchParams] = useSearchParams();
-  const isLoading = useCurrentMovieIsLoading();
-  const [movie] = useCurrentMovie();
+  const isLoading = useDialogMovieIsLoading();
+  const { movie } = useDialogMovie();
 
   useDialogGate(search.get('kinopoisk_id'));
 
@@ -40,11 +43,11 @@ const MovieWatchDialog = () => {
 
   return (
     <>
-      <DialogTitle>{movie?.ru_title}</DialogTitle>
+      <DialogTitle>{movie?.title}</DialogTitle>
       <DialogContent>
         <iframe
-          src={movie?.preview_iframe_src}
-          title={movie?.ru_title}
+          src={movie?.iframe_src}
+          title={movie?.title}
           width="100%"
           height={WATCH_HEIGHT}
           frameBorder="0"
@@ -56,8 +59,7 @@ const MovieWatchDialog = () => {
           onClick={() =>
             setSearchParams({
               dialog: DialogTypes.PREVIEW,
-              type: ContentTypes.MOVIE,
-              kinopoisk_id: movie?.kinopoisk_id || '',
+              kinopoisk_id: movie?.kp_id || '',
             })
           }
           variant="contained"
@@ -69,4 +71,4 @@ const MovieWatchDialog = () => {
   );
 };
 
-export default MovieWatchDialog;
+export default WatchDialog;

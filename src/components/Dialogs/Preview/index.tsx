@@ -13,18 +13,21 @@ import {
 import LockIcon from '@mui/icons-material/Lock';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
-import { useCurrentSerial, useCurrentSerialIsLoading } from '@entities/serial';
+import {
+  useDialogMovie,
+  useDialogMovieIsLoading,
+} from '@entities/dialog-movie';
+import { DialogTypes } from '@shared/constants';
 import { parseIdYouTubeUrl } from '@shared/utils';
 import { useIsAuthorized } from '@entities/user';
-import { ContentTypes, DialogTypes } from '@shared/constants';
 
 import { useDialogGate } from './model';
 import { NotFoundPreview, PREVIEW_HEIGHT, SkeletonPreview } from './styles';
 
-const SerialPreviewDialog = () => {
-  const [serial, kinopoisk, video] = useCurrentSerial();
+const PreviewDialog = () => {
+  const { movie, info, trailer } = useDialogMovie();
   const [search, setSearchParams] = useSearchParams();
-  const isLoading = useCurrentSerialIsLoading();
+  const isLoading = useDialogMovieIsLoading();
   const isAuthorized = useIsAuthorized();
 
   useDialogGate(search.get('kinopoisk_id'));
@@ -51,16 +54,16 @@ const SerialPreviewDialog = () => {
 
   return (
     <>
-      <DialogTitle>{serial?.ru_title}</DialogTitle>
+      <DialogTitle>{movie?.title}</DialogTitle>
       <DialogContent>
-        {video ? (
+        {trailer ? (
           <iframe
             width="100%"
             height={PREVIEW_HEIGHT}
             src={`https://www.youtube.com/embed/${parseIdYouTubeUrl(
-              video?.url
+              trailer?.url
             )}`}
-            title={serial?.ru_title}
+            title={movie?.title}
             frameBorder="0"
             allowFullScreen
           ></iframe>
@@ -68,7 +71,7 @@ const SerialPreviewDialog = () => {
           <NotFoundPreview>трейлер не найден</NotFoundPreview>
         )}
         <div style={{ height: 10 }} />
-        <Typography variant="body2">{kinopoisk?.description}</Typography>
+        <Typography variant="body2">{info?.description}</Typography>
       </DialogContent>
       <DialogActions>
         <Tooltip
@@ -81,8 +84,7 @@ const SerialPreviewDialog = () => {
               onClick={() =>
                 setSearchParams({
                   dialog: DialogTypes.WATCH,
-                  type: ContentTypes.SERIAL,
-                  kinopoisk_id: serial?.kinopoisk_id || '',
+                  kinopoisk_id: movie?.kp_id || '',
                 })
               }
               variant="contained"
@@ -97,4 +99,4 @@ const SerialPreviewDialog = () => {
   );
 };
 
-export default SerialPreviewDialog;
+export default PreviewDialog;

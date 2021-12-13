@@ -1,7 +1,6 @@
 import { useStore, useStoreMap } from 'effector-react';
 
 import { $serials, getSerialsFx, $kinopoiskSerials } from './serials';
-import { $currentSerial, $currentMovieIsLoading } from './serial';
 import { pagination } from './pagination';
 import { $filters } from './filters';
 
@@ -20,6 +19,3 @@ export const useKinopoiskSerial = (kinopoiskId: string) =>
     fn: (serials, [kinopoiskId]) =>
       serials.find((serial) => serial.kinopoiskId === kinopoiskId),
   });
-
-export const useCurrentSerial = () => useStore($currentSerial);
-export const useCurrentSerialIsLoading = () => useStore($currentMovieIsLoading);
