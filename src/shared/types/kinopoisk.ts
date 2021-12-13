@@ -1,8 +1,8 @@
-interface KinopoiskCountry {
+export interface KinopoiskCountry {
   country: string;
 }
 
-interface KinopoiskGenre {
+export interface KinopoiskGenre {
   genre: string;
 }
 
@@ -64,7 +64,7 @@ export interface KinopoiskVideo {
   site: string;
 }
 
-export interface KinopoiskVideoResponse {
+export interface KinopoiskResponse<T> {
   total: number;
-  items: KinopoiskVideo[];
+  items: T[];
 }

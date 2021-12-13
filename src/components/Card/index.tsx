@@ -12,9 +12,9 @@ import {
 } from './styles';
 
 interface CardProps {
-  onClick: () => void;
   title: string;
-  description: string;
+  onClick?: () => void;
+  description?: string;
   loading?: boolean;
   posterUrl?: string;
 }
@@ -27,8 +27,8 @@ const Card: React.FC<CardProps> = ({
   loading,
 }) => {
   return (
-    <MuiCard onClick={onClick}>
-      <CardActionArea>
+    <MuiCard>
+      <CardActionArea onClick={onClick} disabled={loading}>
         {loading ? (
           <Skeleton variant="rectangular" />
         ) : posterUrl ? (

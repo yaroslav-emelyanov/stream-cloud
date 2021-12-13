@@ -5,7 +5,7 @@ import {
   VCDNResponse,
   KinopoiskVideo,
   KinopoiskMovie,
-  KinopoiskVideoResponse,
+  KinopoiskResponse,
 } from '@shared/types';
 
 import { Serial } from './types';
@@ -31,7 +31,9 @@ export const getSerialFx = createEffect<string | null, Serial | null>(
 const getKinopoisVideoFx = createEffect<string, KinopoiskVideo | null>(
   (kinopoiskId) =>
     api.kinopoisk
-      .get<KinopoiskVideoResponse>(`/v2.2/films/${kinopoiskId}/videos`)
+      .get<KinopoiskResponse<KinopoiskVideo>>(
+        `/v2.2/films/${kinopoiskId}/videos`
+      )
       .then(
         (response) =>
           response.data.items.find((item) => item.site === 'YOUTUBE') || null
