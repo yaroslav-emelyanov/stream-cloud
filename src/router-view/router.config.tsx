@@ -5,6 +5,7 @@ import MainLayout from '../layouts/Main';
 import MainPage from '../pages/Main';
 import MoviesPage from '../pages/Movies';
 import SerialsPage from '../pages/Serials';
+import PremiersPage from '../pages/Premiers';
 import NotFoundPage from '../pages/NotFound';
 
 export const routerConfig: RouteObject[] = [
@@ -13,6 +14,14 @@ export const routerConfig: RouteObject[] = [
     element: (
       <MainLayout>
         <MainPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/premiers',
+    element: (
+      <MainLayout>
+        <PremiersPage />
       </MainLayout>
     ),
   },

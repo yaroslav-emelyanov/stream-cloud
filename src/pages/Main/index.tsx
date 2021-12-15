@@ -1,29 +1,54 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { usePremiers } from '@entities/premier';
+import InfiniteScroll from '@components/InfiniteScroll';
+import Card from '@components/Card';
 
-import { usePageGate } from './model';
-import MainCard from './MainCard';
+import {
+  nextPage,
+  useFilms,
+  useHasMorePages,
+  useLoading,
+} from '@entities/film';
+import { DialogTypes } from '@shared/constants';
+
+import Filters from './Filters';
+import { useMainGate } from './model';
 
 const MainPage = () => {
-  const premiers = usePremiers();
+  const [, setSearchParams] = useSearchParams();
+  const hasMore = useHasMorePages();
+  const isLoading = useLoading();
+  const films = useFilms();
 
-  usePageGate();
+  useMainGate();
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 16,
-        justifyContent: 'center',
-        padding: 32,
-      }}
-    >
-      {premiers.map((premier) => (
-        <MainCard premier={premier} key={premier.kinopoiskId} />
-      ))}
-    </div>
+    <>
+      <InfiniteScroll
+        filters={<Filters />}
+        loadMore={nextPage}
+        loading={isLoading}
+        hasMore={hasMore}
+      >
+        {films.map((film) => (
+          <Card
+            onClick={() =>
+              setSearchParams({
+                dialog: DialogTypes.PREVIEW,
+                kinopoisk_id: film.filmId.toString(),
+              })
+            }
+            description={[film.year, film.genres[0]?.genre]
+              .filter(Boolean)
+              .join(', ')}
+            posterUrl={film.posterUrlPreview}
+            title={film.nameRu}
+            key={film.filmId}
+          />
+        ))}
+      </InfiniteScroll>
+    </>
   );
 };
 

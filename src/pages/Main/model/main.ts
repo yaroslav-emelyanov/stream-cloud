@@ -1,18 +1,13 @@
+import { guard } from 'effector';
 import { createGate } from 'effector-react';
 
-import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
-
-import { getPremiersFx } from '@entities/premier';
-import { KinopoiskMonths } from '@shared/constants';
-
-dayjs.extend(localeData);
+import { $currentPage, getFiltersFx, nextPage } from '@entities/film';
 
 export const Page = createGate('main-page');
 
-const date = dayjs();
-
-const year = date.year();
-const month = dayjs.months()[date.month()].toUpperCase() as KinopoiskMonths;
-
-Page.open.watch(() => getPremiersFx({ year, month }));
+guard({
+  clock: Page.open,
+  source: $currentPage,
+  filter: (page) => page === 0,
+  target: [nextPage, getFiltersFx],
+});

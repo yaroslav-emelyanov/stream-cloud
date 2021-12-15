@@ -28,6 +28,10 @@ const MainLayout: React.FC = ({ children }) => {
         <NavTabs
           list={[
             {
+              label: 'Премьеры',
+              to: '/premiers',
+            },
+            {
               label: 'Главная',
               to: '/',
             },

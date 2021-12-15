@@ -29,7 +29,6 @@ export const getMoviesFx = createEffect<GetMoviesParams, VCDNResponse<Movie>>(
       })
       .then((response) => response.data)
 );
-
 export const $kinopoiskMovies =
   utils.createKinopoiskMoviesStoreByVDCN(getMoviesFx);
 
