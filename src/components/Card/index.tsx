@@ -3,10 +3,11 @@ import React from 'react';
 import { CardMedia, Typography } from '@mui/material';
 
 import {
-  Card as MuiCard,
+  Chip,
   Skeleton,
   CardContent,
   CardActionArea,
+  Card as MuiCard,
   NotFoundCardMedia,
   HEIGHT_CARD_MEDIA,
 } from './styles';
@@ -14,7 +15,8 @@ import {
 interface CardProps {
   title: string;
   onClick?: () => void;
-  description?: string;
+  rating?: string;
+  description?: React.ReactNode;
   loading?: boolean;
   posterUrl?: string;
 }
@@ -22,13 +24,18 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({
   onClick,
   title,
+  rating,
   description,
   posterUrl,
   loading,
 }) => {
   return (
     <MuiCard>
-      <CardActionArea onClick={onClick} disabled={loading}>
+      <CardActionArea
+        style={{ position: 'relative' }}
+        onClick={onClick}
+        disabled={loading}
+      >
         {loading ? (
           <Skeleton variant="rectangular" />
         ) : posterUrl ? (
@@ -41,6 +48,7 @@ const Card: React.FC<CardProps> = ({
         ) : (
           <NotFoundCardMedia>Постер не найден</NotFoundCardMedia>
         )}
+        {rating && <Chip label={rating} color="primary" size="small" />}
         <CardContent>
           <Typography variant="caption" component="div">
             <b>{title}</b>

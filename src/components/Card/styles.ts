@@ -2,6 +2,7 @@ import { colors, styled } from '@mui/material';
 
 import {
   Card as MuiCard,
+  Chip as MuiChip,
   Skeleton as MuiSkeleton,
   CardContent as MuiCardContent,
   CardActionArea as MuiCardActionArea,
@@ -16,6 +17,7 @@ export const Card = styled(MuiCard)(() => ({
 }));
 
 export const CardActionArea = styled(MuiCardActionArea)(() => ({
+  position: 'relative',
   height: '100%',
 }));
 
@@ -35,4 +37,10 @@ export const NotFoundCardMedia = styled('div')(() => ({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: colors.grey[200],
+}));
+
+export const Chip = styled(MuiChip)(({ theme }) => ({
+  position: 'absolute',
+  left: theme.spacing(1),
+  top: theme.spacing(1),
 }));

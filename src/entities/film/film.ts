@@ -1,15 +1,15 @@
 import { createEffect, createStore, attach, sample } from 'effector';
 import { debounce } from 'patronum/debounce';
 
-import dayjs from 'dayjs';
 import * as api from '@shared/api';
 
 import { $filters } from './filters';
+import { nextPage } from './pagination';
 import { $currentPage, $lastPage } from './pagination';
 import { GetFilmsParams, FilmResponse, Film } from './types';
 
 export const getFilmsFx = createEffect<GetFilmsParams, FilmResponse>(
-  ({ page, order, rating, yearFrom, type, genres, countries }) =>
+  ({ page, order, rating, year, type, genres, countries }) =>
     api.kinopoisk
       .get<FilmResponse>('/v2.1/films/search-by-filters', {
         params: {
@@ -18,8 +18,8 @@ export const getFilmsFx = createEffect<GetFilmsParams, FilmResponse>(
           type,
           ratingFrom: rating[0],
           ratingTo: rating[1],
-          yearFrom: yearFrom ? dayjs(yearFrom).year() : undefined,
-          yearTo: yearFrom ? dayjs(yearFrom).year() : undefined,
+          yearFrom: year[0],
+          yearTo: year[1],
           genre: genres.length ? genres.join(',') : undefined,
           country: countries.length ? countries.join(',') : undefined,
         },
@@ -27,12 +27,13 @@ export const getFilmsFx = createEffect<GetFilmsParams, FilmResponse>(
       .then((response) => response.data)
 );
 
+$currentPage.on(getFilmsFx.done, (_, { params }) => params.page);
 $lastPage.on(getFilmsFx.doneData, (_, { pagesCount }) => pagesCount);
 
 sample({
-  clock: $currentPage,
-  source: $filters,
-  fn: (params, page) => ({ page, ...params }),
+  clock: nextPage,
+  source: [$currentPage, $filters],
+  fn: ([page, filters]) => ({ page, ...filters }),
   target: getFilmsFx,
 });
 

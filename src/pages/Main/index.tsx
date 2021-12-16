@@ -39,9 +39,17 @@ const MainPage = () => {
                 kinopoisk_id: film.filmId.toString(),
               })
             }
-            description={[film.year, film.genres[0]?.genre]
-              .filter(Boolean)
-              .join(', ')}
+            rating={film.rating}
+            description={
+              <>
+                <div>
+                  {[film.year, film.genres[0]?.genre]
+                    .filter(Boolean)
+                    .join(', ')}
+                </div>
+                <div>{film.countries[0]?.country}</div>
+              </>
+            }
             posterUrl={film.posterUrlPreview}
             title={film.nameRu}
             key={film.filmId}

@@ -8,8 +8,8 @@ import {
   $genres,
   $rating,
   $type,
-  $yearFrom,
   $selectedCountries,
+  $year,
 } from './filters';
 import { $hasMorePages } from './pagination';
 
@@ -31,8 +31,6 @@ export const useGenres = () => {
   };
 };
 
-export const useYearFrom = () => useStore($yearFrom);
-
 export const useOrder = () => useStore($order);
 
 export const useRating = () => useStore($rating);
@@ -48,3 +46,5 @@ export const useCountries = () => {
     selectedCountries,
   };
 };
+
+export const useYear = () => useStore($year);

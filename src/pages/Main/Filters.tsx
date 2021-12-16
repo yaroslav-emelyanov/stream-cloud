@@ -9,14 +9,11 @@ import {
   Select,
   SelectChangeEvent,
   Slider,
-  TextField,
 } from '@mui/material';
 
 import {
   useGenres,
   selectGenres,
-  setYearFrom,
-  useYearFrom,
   useOrder,
   setOrder,
   FilmOrders,
@@ -28,17 +25,20 @@ import {
   useCountries,
   selectCountries,
   resetFilters,
+  useYear,
+  setYear,
 } from '@entities/film';
 
-import { DatePicker } from '@mui/lab';
+const MAX_YEAR = new Date().getFullYear();
+const MIN_YEAR = 1888;
 
 const Filters = () => {
   const { countries, selectedCountries } = useCountries();
   const { genres, selectedGenres } = useGenres();
-  const yearFrom = useYearFrom();
   const rating = useRating();
   const order = useOrder();
   const type = useType();
+  const year = useYear();
 
   const handleChangeGenres = (
     event: SelectChangeEvent<typeof selectedGenres>
@@ -74,8 +74,21 @@ const Filters = () => {
     setRating(value);
   };
 
+  const handleChangeYear = (event: Event, newValue: number | number[]) => {
+    const value = newValue as typeof year;
+
+    setYear(value);
+  };
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 16,
+        flexWrap: 'wrap',
+      }}
+    >
       <FormControl sx={{ flex: 1 }} size="small">
         <InputLabel id="genres-label">Жанр</InputLabel>
         <Select
@@ -92,6 +105,15 @@ const Filters = () => {
           ))}
         </Select>
       </FormControl>
+      <Slider
+        value={year}
+        min={MIN_YEAR}
+        max={MAX_YEAR}
+        onChange={handleChangeYear}
+        valueLabelDisplay="auto"
+        style={{ width: 100 }}
+        disableSwap
+      />
       <FormControl sx={{ flex: 1 }} size="small">
         <InputLabel id="genres-label">Страны</InputLabel>
         <Select
@@ -108,13 +130,6 @@ const Filters = () => {
           ))}
         </Select>
       </FormControl>
-      <DatePicker
-        views={['year']}
-        InputProps={{ size: 'small' }}
-        value={yearFrom}
-        onChange={setYearFrom}
-        renderInput={(params) => <TextField {...params} helperText={null} />}
-      />
       <Slider
         value={rating}
         step={1}

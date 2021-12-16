@@ -55,14 +55,17 @@ export const $rating = restore<[number, number]>(setRating, [0, 10]).reset(
   resetFilters
 );
 
-export const setYearFrom = createEvent<Date | null>();
-export const $yearFrom = restore(setYearFrom, null).reset(resetFilters);
+export const setYear = createEvent<[number, number]>();
+export const $year = restore<[number, number]>(setYear, [
+  1888,
+  new Date().getFullYear(),
+]).reset(resetFilters);
 
 export const $filters = combine({
   genres: $selectedGenres,
   countries: $selectedCountries,
   rating: $rating,
-  yearFrom: $yearFrom,
   order: $order,
   type: $type,
+  year: $year,
 });

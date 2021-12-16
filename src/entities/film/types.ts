@@ -33,7 +33,7 @@ export interface GetFilmsParams {
   order: FilmOrders;
   type: FilmTypes;
   rating: [number, number];
-  yearFrom: Date | null;
+  year: [number, number];
   genres: number[];
   countries: number[];
 }
