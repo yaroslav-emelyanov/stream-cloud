@@ -2,7 +2,13 @@ import React from 'react';
 
 import { Slider, Typography } from '@mui/material';
 
-import { useYear, setYear, MIN_YEAR, MAX_YEAR } from '@entities/film';
+import {
+  useYear,
+  setYear,
+  MIN_YEAR,
+  MAX_YEAR,
+  useSearch,
+} from '@entities/film';
 
 const marks = [
   {
@@ -16,6 +22,7 @@ const marks = [
 ];
 
 const YearSlider = () => {
+  const search = useSearch();
   const year = useYear();
 
   return (
@@ -29,6 +36,7 @@ const YearSlider = () => {
         marks={marks}
         onChange={(_, value) => setYear(value as typeof year)}
         valueLabelDisplay="auto"
+        disabled={Boolean(search)}
         disableSwap
       />
     </>

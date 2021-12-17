@@ -1,4 +1,13 @@
-import { createEffect, createStore, attach, sample } from 'effector';
+import {
+  createEffect,
+  createStore,
+  attach,
+  sample,
+  combine,
+  createEvent,
+  restore,
+  guard,
+} from 'effector';
 import { debounce } from 'patronum/debounce';
 
 import * as api from '@shared/api';
@@ -27,6 +36,17 @@ export const getFilmsFx = createEffect<GetFilmsParams, FilmResponse>(
       .then((response) => response.data)
 );
 
+export const getFilmsBySearchFx = createEffect<string, FilmResponse>(
+  (keyword) =>
+    api.kinopoisk
+      .get<FilmResponse>('/v2.1/films/search-by-keyword', {
+        params: {
+          keyword,
+        },
+      })
+      .then((response) => response.data)
+);
+
 $currentPage.on(getFilmsFx.done, (_, { params }) => params.page);
 $lastPage.on(getFilmsFx.doneData, (_, { pagesCount }) => pagesCount);
 
@@ -48,6 +68,35 @@ debounce({
   target: getFilmsByFiltersFx,
 });
 
-export const $films = createStore<Film[]>([])
+export const setSearch = createEvent<string>();
+export const $search = restore(setSearch, '');
+
+const $defaultFilms = createStore<Film[]>([])
   .on(getFilmsFx.doneData, (prevFilms, { films }) => [...prevFilms, ...films])
   .on(getFilmsByFiltersFx.doneData, (_, { films }) => films);
+
+const $searchFilms = createStore<Film[]>([]).on(
+  getFilmsBySearchFx.doneData,
+  (_, { films }) => films
+);
+
+const fetchBySearch = guard({
+  source: $search,
+  filter: Boolean,
+});
+
+debounce({
+  source: fetchBySearch,
+  timeout: 500,
+  target: getFilmsBySearchFx,
+});
+
+export const $films = combine(
+  {
+    defaultFilms: $defaultFilms,
+    searchFilms: $searchFilms,
+    search: $search,
+  },
+  ({ defaultFilms, searchFilms, search }) =>
+    search ? searchFilms : defaultFilms
+);

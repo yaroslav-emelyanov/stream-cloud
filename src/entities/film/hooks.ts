@@ -1,7 +1,12 @@
 import { useStore } from 'effector-react';
-import { $order, $selectedGenres } from '.';
+import { $order, $search, $selectedGenres } from '.';
 
-import { $films, getFilmsByFiltersFx, getFilmsFx } from './film';
+import {
+  $films,
+  getFilmsByFiltersFx,
+  getFilmsBySearchFx,
+  getFilmsFx,
+} from './film';
 import {
   $countries,
   $filters,
@@ -16,8 +21,6 @@ import { $hasMorePages } from './pagination';
 export const useFilms = () => useStore($films);
 
 export const useLoading = () => useStore(getFilmsFx.pending);
-
-export const useHasMorePages = () => useStore($hasMorePages);
 
 export const useFilters = () => useStore($filters);
 
@@ -49,4 +52,15 @@ export const useCountries = () => {
 
 export const useYear = () => useStore($year);
 
+export const useSearch = () => useStore($search);
+
 export const useFiltersLoading = () => useStore(getFilmsByFiltersFx.pending);
+
+export const useSearchLoading = () => useStore(getFilmsBySearchFx.pending);
+
+export const useHasMorePages = () => {
+  const hasMore = useStore($hasMorePages);
+  const search = useSearch();
+
+  return !search && hasMore;
+};

@@ -10,6 +10,7 @@ import {
   useFiltersLoading,
   useHasMorePages,
   useLoading,
+  useSearchLoading,
 } from '@entities/film';
 import { DialogTypes } from '@shared/constants';
 
@@ -24,16 +25,17 @@ const MainPage = () => {
   const isLoading = useLoading();
   const films = useFilms();
   const isFiltersLoading = useFiltersLoading();
+  const isSearchLoading = useSearchLoading();
 
   useMainGate();
 
   return (
     <>
-      <FiltersProgress show={isFiltersLoading} />
+      <FiltersProgress show={isFiltersLoading || isSearchLoading} />
       <InfiniteScroll
         filters={<Filters />}
         loadMore={nextPage}
-        loading={isLoading}
+        loading={isLoading || isSearchLoading}
         hasMore={hasMore}
       >
         {films.map((film) => (
