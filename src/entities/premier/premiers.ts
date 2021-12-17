@@ -1,7 +1,6 @@
 import { createEffect, restore } from 'effector';
 
 import * as api from '@shared/api';
-import * as utils from '@shared/utils';
 import { KinopoiskResponse } from '@shared/types';
 import { KinopoiskMonths } from '@shared/constants';
 
@@ -22,6 +21,3 @@ export const getPremiersFx = createEffect<GetPremierParams, Premier[]>(
 );
 
 export const $premieres = restore(getPremiersFx.doneData, []);
-
-export const { $kinopoiskItems, $kinopoiskItemsLoading } =
-  utils.createKinopoiskMoviesStore(getPremiersFx);

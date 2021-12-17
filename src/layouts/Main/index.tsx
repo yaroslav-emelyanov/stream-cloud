@@ -35,14 +35,6 @@ const MainLayout: React.FC = ({ children }) => {
               label: 'Главная',
               to: '/',
             },
-            {
-              label: 'Фильмы',
-              to: '/movies',
-            },
-            {
-              label: 'Сериалы',
-              to: '/serials',
-            },
           ]}
         />
         {isAuthorized ? (
