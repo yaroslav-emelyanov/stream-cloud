@@ -7,12 +7,15 @@ import Card from '@components/Card';
 import {
   nextPage,
   useFilms,
+  useFiltersLoading,
   useHasMorePages,
   useLoading,
 } from '@entities/film';
 import { DialogTypes } from '@shared/constants';
 
 import Filters from './Filters';
+import FiltersProgress from './FiltersProgress';
+
 import { useMainGate } from './model';
 
 const MainPage = () => {
@@ -20,11 +23,13 @@ const MainPage = () => {
   const hasMore = useHasMorePages();
   const isLoading = useLoading();
   const films = useFilms();
+  const isFiltersLoading = useFiltersLoading();
 
   useMainGate();
 
   return (
     <>
+      <FiltersProgress show={isFiltersLoading} />
       <InfiniteScroll
         filters={<Filters />}
         loadMore={nextPage}

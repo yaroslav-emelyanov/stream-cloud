@@ -37,7 +37,7 @@ sample({
   target: getFilmsFx,
 });
 
-const getFilmsByFiltersFx = attach({
+export const getFilmsByFiltersFx = attach({
   effect: getFilmsFx,
   mapParams: (params: Omit<GetFilmsParams, 'page'>) => ({ page: 1, ...params }),
 });

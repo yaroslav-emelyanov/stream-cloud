@@ -1,7 +1,7 @@
 import { useStore } from 'effector-react';
 import { $order, $selectedGenres } from '.';
 
-import { $films, getFilmsFx } from './film';
+import { $films, getFilmsByFiltersFx, getFilmsFx } from './film';
 import {
   $countries,
   $filters,
@@ -48,3 +48,5 @@ export const useCountries = () => {
 };
 
 export const useYear = () => useStore($year);
+
+export const useFiltersLoading = () => useStore(getFilmsByFiltersFx.pending);
