@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 
-import { CircularProgress, Slide, useScrollTrigger } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 
 import {
   Filters,
@@ -33,25 +33,9 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
     rootMargin: '0px',
   });
 
-  const [scrollTarget, setScrollTarget] = useState<Node | Window | undefined>(
-    undefined
-  );
-  const trigger = useScrollTrigger({ target: scrollTarget });
-
   return (
-    <InfiniteScrollContainer
-      style={{ paddingTop: filters ? 0 : undefined }}
-      ref={(node) => {
-        if (node) {
-          setScrollTarget(node);
-        }
-      }}
-    >
-      {filters && (
-        <Slide direction="down" in={!trigger}>
-          <Filters>{filters}</Filters>
-        </Slide>
-      )}
+    <InfiniteScrollContainer style={{ paddingTop: filters ? 0 : undefined }}>
+      {filters && <Filters>{filters}</Filters>}
 
       {children}
 

@@ -16,6 +16,8 @@ import {
   FilterCountry,
 } from './types';
 
+import { MIN_YEAR, MAX_YEAR } from './constants';
+
 export const resetFilters = createEvent();
 
 export const getFiltersFx = createEffect<void, FiltersResponse>(() =>
@@ -57,8 +59,8 @@ export const $rating = restore<[number, number]>(setRating, [0, 10]).reset(
 
 export const setYear = createEvent<[number, number]>();
 export const $year = restore<[number, number]>(setYear, [
-  1888,
-  new Date().getFullYear(),
+  MIN_YEAR,
+  MAX_YEAR,
 ]).reset(resetFilters);
 
 export const $filters = combine({

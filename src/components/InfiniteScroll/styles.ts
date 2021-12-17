@@ -22,11 +22,8 @@ export const InfiniteScrollContainer = styled('div')(({ theme }) => ({
 }));
 
 export const Filters = styled('div')(({ theme }) => ({
-  position: 'sticky',
-  left: 0,
-  top: 0,
   width: '100%',
-  padding: `${theme.spacing(2)} ${theme.spacing(4)}`,
+  padding: theme.spacing(4),
   backgroundColor: theme.palette.background.paper,
   zIndex: 1,
 }));
