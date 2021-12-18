@@ -6,7 +6,7 @@ export const SkeletonWatch = styled(SkeletonMui)({
   height: WATCH_HEIGHT,
 });
 
-export const NotFoundPreview = styled('div')(() => ({
+export const NotFoundWatch = styled('div')(() => ({
   height: WATCH_HEIGHT,
   backgroundColor: colors.grey[300],
   display: 'flex',

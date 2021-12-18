@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
+import ErrorIcon from '@mui/icons-material/Error';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import {
@@ -74,26 +75,32 @@ const PreviewDialog = () => {
         <Typography variant="body2">{info?.description}</Typography>
       </DialogContent>
       <DialogActions>
-        <Tooltip
-          title={isAuthorized ? '' : 'авторизируйтесь для просмотра'}
-          placement="top-end"
-        >
-          <span>
-            <Button
-              endIcon={isAuthorized ? <PlayArrowIcon /> : <LockIcon />}
-              onClick={() =>
-                setSearchParams({
-                  dialog: DialogTypes.WATCH,
-                  kinopoisk_id: movie?.kp_id || '',
-                })
-              }
-              variant="contained"
-              disabled={!isAuthorized}
-            >
-              смотреть
-            </Button>
-          </span>
-        </Tooltip>
+        {movie ? (
+          <Tooltip
+            title={isAuthorized ? '' : 'авторизируйтесь для просмотра'}
+            placement="top-end"
+          >
+            <span>
+              <Button
+                endIcon={isAuthorized ? <PlayArrowIcon /> : <LockIcon />}
+                onClick={() =>
+                  setSearchParams({
+                    dialog: DialogTypes.WATCH,
+                    kinopoisk_id: movie.kp_id,
+                  })
+                }
+                variant="contained"
+                disabled={!isAuthorized}
+              >
+                смотреть
+              </Button>
+            </span>
+          </Tooltip>
+        ) : (
+          <Button endIcon={<ErrorIcon />} variant="contained" disabled>
+            Видео не найдено
+          </Button>
+        )}
       </DialogActions>
     </>
   );

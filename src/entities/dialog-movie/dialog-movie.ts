@@ -39,9 +39,9 @@ const getMovieInfoFx = createEffect<string | null, KinopoiskMovie>(
       .then((response) => response.data)
 );
 
-const $movie = restore(getMovieFx.doneData, null);
-const $trailer = restore(getTrailerFx.doneData, null);
-const $info = restore(getMovieInfoFx.doneData, null);
+const $movie = restore(getMovieFx.doneData, null).reset(getMovieFx.fail);
+const $trailer = restore(getTrailerFx.doneData, null).reset(getTrailerFx.fail);
+const $info = restore(getMovieInfoFx.doneData, null).reset(getMovieInfoFx.fail);
 
 export const $dialogMovieIsLoading = combine(
   [getMovieFx.pending, getMovieInfoFx.pending, getTrailerFx.pending],
@@ -55,14 +55,14 @@ export const $dialogMovie = combine({
 });
 
 export const watchDialogMovie = (clock: Unit<string | null>) => {
-  const target = guard({
+  const trigger = guard({
     clock,
     source: $movie,
     filter: (movie, kinopoiskId) => movie?.kp_id !== kinopoiskId,
   });
 
   sample({
-    clock: target,
+    clock: trigger,
     source: clock,
     target: [getMovieFx, getMovieInfoFx, getTrailerFx],
   });

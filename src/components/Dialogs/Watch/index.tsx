@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 
 import { useDialogGate } from './model';
-import { SkeletonWatch, WATCH_HEIGHT } from './styles';
+import { SkeletonWatch, NotFoundWatch, WATCH_HEIGHT } from './styles';
 
 const WatchDialog = () => {
   const [search, setSearchParams] = useSearchParams();
@@ -45,14 +45,18 @@ const WatchDialog = () => {
     <>
       <DialogTitle>{movie?.title}</DialogTitle>
       <DialogContent>
-        <iframe
-          src={movie?.iframe_src}
-          title={movie?.title}
-          width="100%"
-          height={WATCH_HEIGHT}
-          frameBorder="0"
-          allowFullScreen
-        />
+        {movie ? (
+          <iframe
+            src={movie?.iframe_src}
+            title={movie?.title}
+            width="100%"
+            height={WATCH_HEIGHT}
+            frameBorder="0"
+            allowFullScreen
+          />
+        ) : (
+          <NotFoundWatch>Видео не найдено</NotFoundWatch>
+        )}
       </DialogContent>
       <DialogActions>
         <Button
