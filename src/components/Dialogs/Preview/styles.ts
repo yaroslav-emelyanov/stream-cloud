@@ -9,6 +9,7 @@ export const SkeletonPreview = styled(SkeletonMui)({
 export const NotFoundPreview = styled('div')(() => ({
   height: PREVIEW_HEIGHT,
   backgroundColor: colors.grey[300],
+  color: colors.grey[900],
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

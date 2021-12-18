@@ -1,4 +1,3 @@
-import { colors } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const ContentWrapper = styled('div')(({ theme }) => ({
@@ -13,7 +12,7 @@ export const Nav = styled('nav')(({ theme }) => ({
   alignItems: 'center',
   paddingRight: theme.spacing(2),
   paddingLeft: theme.spacing(2),
-  backgroundColor: colors.lightBlue[100],
+  backgroundColor: theme.palette.primary.main,
 }));
 
 export const Main = styled('main')(() => ({

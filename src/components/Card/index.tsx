@@ -53,7 +53,7 @@ const Card: React.FC<CardProps> = ({
           <Typography variant="caption" component="div">
             <b>{title}</b>
           </Typography>
-          <Typography color="GrayText" variant="caption" component="div">
+          <Typography color="whitesmoke" variant="caption" component="div">
             {description}
           </Typography>
         </CardContent>

@@ -9,6 +9,7 @@ export const SkeletonWatch = styled(SkeletonMui)({
 export const NotFoundWatch = styled('div')(() => ({
   height: WATCH_HEIGHT,
   backgroundColor: colors.grey[300],
+  color: colors.grey[900],
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
