@@ -8,10 +8,15 @@ import {
   Select,
 } from '@mui/material';
 
-import { FilmOrders, setOrder, useOrder, useSearch } from '@entities/film';
+import {
+  FilmOrders,
+  setOrder,
+  useFiltersDisabled,
+  useOrder,
+} from '@entities/film';
 
 const OrderSelect = () => {
-  const search = useSearch();
+  const disabled = useFiltersDisabled();
   const order = useOrder();
 
   return (
@@ -22,7 +27,7 @@ const OrderSelect = () => {
         labelId="order-label"
         value={order}
         onChange={(e) => setOrder(e.target.value as FilmOrders)}
-        disabled={Boolean(search)}
+        disabled={disabled}
       >
         <MenuItem value={FilmOrders.RATING}> Рейтинг</MenuItem>
         <MenuItem value={FilmOrders.YEAR}>Год</MenuItem>

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Slider, Typography } from '@mui/material';
 
-import { useRating, setRating, useSearch } from '@entities/film';
+import { useRating, setRating, useFiltersDisabled } from '@entities/film';
 
 const marks = [
   {
@@ -16,7 +16,7 @@ const marks = [
 ];
 
 const RatingSlider = () => {
-  const search = useSearch();
+  const disabled = useFiltersDisabled();
   const rating = useRating();
 
   return (
@@ -30,7 +30,7 @@ const RatingSlider = () => {
         marks={marks}
         onChange={(_, value) => setRating(value as typeof rating)}
         valueLabelDisplay="auto"
-        disabled={Boolean(search)}
+        disabled={disabled}
         disableSwap
       />
     </>

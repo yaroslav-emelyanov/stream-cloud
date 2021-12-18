@@ -54,6 +54,8 @@ export const useYear = () => useStore($year);
 
 export const useSearch = () => useStore($search);
 
+export const useFiltersDisabled = () => Boolean(useSearch());
+
 export const useFiltersLoading = () => useStore(getFilmsByFiltersFx.pending);
 
 export const useSearchLoading = () => useStore(getFilmsBySearchFx.pending);

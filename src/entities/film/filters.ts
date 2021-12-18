@@ -71,3 +71,6 @@ export const $filters = combine({
   type: $type,
   year: $year,
 });
+
+export const setSearch = createEvent<string>();
+export const $search = restore(setSearch, '');

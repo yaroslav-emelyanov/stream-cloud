@@ -8,10 +8,15 @@ import {
   Select,
 } from '@mui/material';
 
-import { FilmTypes, setType, useSearch, useType } from '@entities/film';
+import {
+  setType,
+  useType,
+  FilmTypes,
+  useFiltersDisabled,
+} from '@entities/film';
 
 const TypeSelect = () => {
-  const search = useSearch();
+  const disabled = useFiltersDisabled();
   const type = useType();
 
   return (
@@ -22,7 +27,7 @@ const TypeSelect = () => {
         labelId="type-label"
         value={type}
         onChange={(e) => setType(e.target.value as FilmTypes)}
-        disabled={Boolean(search)}
+        disabled={disabled}
       >
         <MenuItem value={FilmTypes.ALL}>Все</MenuItem>
         <MenuItem value={FilmTypes.FILM}>Фильмы</MenuItem>

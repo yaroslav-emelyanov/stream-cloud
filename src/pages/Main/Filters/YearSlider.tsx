@@ -7,7 +7,7 @@ import {
   setYear,
   MIN_YEAR,
   MAX_YEAR,
-  useSearch,
+  useFiltersDisabled,
 } from '@entities/film';
 
 const marks = [
@@ -22,7 +22,7 @@ const marks = [
 ];
 
 const YearSlider = () => {
-  const search = useSearch();
+  const disabled = useFiltersDisabled();
   const year = useYear();
 
   return (
@@ -36,7 +36,7 @@ const YearSlider = () => {
         marks={marks}
         onChange={(_, value) => setYear(value as typeof year)}
         valueLabelDisplay="auto"
-        disabled={Boolean(search)}
+        disabled={disabled}
         disableSwap
       />
     </>

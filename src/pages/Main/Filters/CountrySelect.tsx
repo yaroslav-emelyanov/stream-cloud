@@ -8,11 +8,15 @@ import {
   Select,
 } from '@mui/material';
 
-import { selectCountries, useCountries, useSearch } from '@entities/film';
+import {
+  selectCountries,
+  useCountries,
+  useFiltersDisabled,
+} from '@entities/film';
 
 const CountrySelect = () => {
   const { countries, selectedCountries } = useCountries();
-  const search = useSearch();
+  const disabled = useFiltersDisabled();
 
   return (
     <FormControl size="small" fullWidth>
@@ -23,7 +27,7 @@ const CountrySelect = () => {
         multiple
         onChange={(e) => selectCountries(e.target.value as number[])}
         input={<OutlinedInput label="Страны" />}
-        disabled={Boolean(search)}
+        disabled={disabled}
       >
         {countries.map((country) => (
           <MenuItem value={country.id} key={country.id}>

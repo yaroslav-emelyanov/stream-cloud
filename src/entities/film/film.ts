@@ -4,16 +4,14 @@ import {
   attach,
   sample,
   combine,
-  createEvent,
-  restore,
   guard,
 } from 'effector';
 import { debounce } from 'patronum/debounce';
 
 import * as api from '@shared/api';
 
-import { $filters } from './filters';
 import { nextPage } from './pagination';
+import { $filters, $search } from './filters';
 import { $currentPage, $lastPage } from './pagination';
 import { GetFilmsParams, FilmResponse, Film } from './types';
 
@@ -68,9 +66,6 @@ debounce({
   target: getFilmsByFiltersFx,
 });
 
-export const setSearch = createEvent<string>();
-export const $search = restore(setSearch, '');
-
 const $defaultFilms = createStore<Film[]>([])
   .on(getFilmsFx.doneData, (prevFilms, { films }) => [...prevFilms, ...films])
   .on(getFilmsByFiltersFx.doneData, (_, { films }) => films);
@@ -80,13 +75,13 @@ const $searchFilms = createStore<Film[]>([]).on(
   (_, { films }) => films
 );
 
-const fetchBySearch = guard({
+const searchTrigger = guard({
   source: $search,
   filter: Boolean,
 });
 
 debounce({
-  source: fetchBySearch,
+  source: searchTrigger,
   timeout: 500,
   target: getFilmsBySearchFx,
 });

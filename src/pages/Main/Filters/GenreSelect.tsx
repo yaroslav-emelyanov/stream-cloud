@@ -8,11 +8,11 @@ import {
   Select,
 } from '@mui/material';
 
-import { selectGenres, useGenres, useSearch } from '@entities/film';
+import { selectGenres, useFiltersDisabled, useGenres } from '@entities/film';
 
 const GenreSelect = () => {
   const { genres, selectedGenres } = useGenres();
-  const search = useSearch();
+  const disabled = useFiltersDisabled();
 
   return (
     <FormControl size="small" fullWidth>
@@ -23,7 +23,7 @@ const GenreSelect = () => {
         multiple
         onChange={(e) => selectGenres(e.target.value as number[])}
         input={<OutlinedInput label="Жанры" />}
-        disabled={Boolean(search)}
+        disabled={disabled}
       >
         {genres.map((genre) => (
           <MenuItem value={genre.id} key={genre.id}>
