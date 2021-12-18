@@ -23,10 +23,11 @@ import { parseIdYouTubeUrl } from '@shared/utils';
 import { useIsAuthorized } from '@entities/user';
 
 import { useDialogGate } from './model';
+import SimilarMovieSlider from './SimilarMovieSlider';
 import { NotFoundPreview, PREVIEW_HEIGHT, SkeletonPreview } from './styles';
 
 const PreviewDialog = () => {
-  const { movie, info, trailer } = useDialogMovie();
+  const { movie, info, trailer, similarMovies } = useDialogMovie();
   const [search, setSearchParams] = useSearchParams();
   const isLoading = useDialogMovieIsLoading();
   const isAuthorized = useIsAuthorized();
@@ -55,7 +56,7 @@ const PreviewDialog = () => {
 
   return (
     <>
-      <DialogTitle>{movie?.title}</DialogTitle>
+      <DialogTitle>{info?.nameRu}</DialogTitle>
       <DialogContent>
         {trailer ? (
           <iframe
@@ -64,15 +65,23 @@ const PreviewDialog = () => {
             src={`https://www.youtube.com/embed/${parseIdYouTubeUrl(
               trailer?.url
             )}`}
-            title={movie?.title}
+            title={info?.nameRu}
             frameBorder="0"
             allowFullScreen
           ></iframe>
         ) : (
           <NotFoundPreview>трейлер не найден</NotFoundPreview>
         )}
-        <div style={{ height: 10 }} />
+        <div style={{ height: 16 }} />
         <Typography variant="body2">{info?.description}</Typography>
+        {!!similarMovies.length && (
+          <>
+            <div style={{ height: 16 }} />
+            <Typography>Похожие</Typography>
+            <div style={{ height: 16 }} />
+            <SimilarMovieSlider list={similarMovies} />
+          </>
+        )}
       </DialogContent>
       <DialogActions>
         {movie ? (

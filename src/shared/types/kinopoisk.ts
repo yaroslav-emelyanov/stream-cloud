@@ -51,6 +51,16 @@ export interface KinopoiskMovie {
   completed: boolean;
 }
 
+export interface KinopoiskSimilarMovie {
+  filmId: number;
+  nameRu: string;
+  nameEn: string;
+  nameOriginal: string;
+  posterUrl: string;
+  posterUrlPreview: string;
+  relationType: string;
+}
+
 export interface KinopoiskMovieListItem {
   movieId: number;
   kinopoiskId: string;
