@@ -1,4 +1,5 @@
 import { combine, createEffect, guard, restore, sample, Unit } from 'effector';
+import { pending } from 'patronum/pending';
 
 import * as api from '@shared/api';
 import {
@@ -56,10 +57,9 @@ const $similarMovies = restore(getSimilarMoviesFx.doneData, []).reset(
   getSimilarMoviesFx.fail
 );
 
-export const $dialogMovieIsLoading = combine(
-  [getMovieFx.pending, getMovieInfoFx.pending, getTrailerFx.pending],
-  (values) => values.every((value) => value)
-);
+export const $dialogMovieIsLoading = pending({
+  effects: [getMovieFx, getMovieInfoFx, getTrailerFx],
+});
 
 export const $dialogMovie = combine({
   info: $info,
