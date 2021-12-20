@@ -4,6 +4,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/swiper.min.css';
 
+import { useMediaQuery, useTheme } from '@mui/material';
+
 import Card from '@components/Card';
 import { KinopoiskSimilarMovie } from '@shared/types';
 import { DialogTypes } from '@shared/constants';
@@ -14,8 +16,12 @@ interface CardSliderProps {
 
 const SimilarMovieSlider: React.FC<CardSliderProps> = ({ list }) => {
   const [, setSearchParams] = useSearchParams();
+
+  const theme = useTheme();
+  const smMatch = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Swiper spaceBetween={1} slidesPerView={3}>
+    <Swiper spaceBetween={0.5} slidesPerView={smMatch ? 2 : 3}>
       {list.map((item) => (
         <SwiperSlide key={item.filmId}>
           <Card

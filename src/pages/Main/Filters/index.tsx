@@ -13,35 +13,27 @@ import GenreSelect from './GenreSelect';
 import OrderSelect from './OrderSelect';
 import CountrySelect from './CountrySelect';
 
-import { FiltersContainer, SelectContainer, SliderContainer } from './styles';
+import { FiltersContainer } from './styles';
 
 const Filters = () => {
   const search = useSearch();
 
   return (
     <FiltersContainer>
-      <SelectContainer>
-        <SearchField />
-        <TypeSelect />
-        <GenreSelect />
-        <CountrySelect />
-        <OrderSelect />
-        <Button
-          onClick={() => resetFilters()}
-          variant="contained"
-          disabled={Boolean(search)}
-        >
-          Сброс
-        </Button>
-      </SelectContainer>
-      <SliderContainer>
-        <div style={{ width: '35%' }}>
-          <RatingSlider />
-        </div>
-        <div style={{ width: '65%' }}>
-          <YearSlider />
-        </div>
-      </SliderContainer>
+      <SearchField />
+      <TypeSelect />
+      <GenreSelect />
+      <CountrySelect />
+      <OrderSelect />
+      <Button
+        onClick={() => resetFilters()}
+        variant="contained"
+        disabled={Boolean(search)}
+      >
+        Сброс
+      </Button>
+      <RatingSlider />
+      <YearSlider />
     </FiltersContainer>
   );
 };

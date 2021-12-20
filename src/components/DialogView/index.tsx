@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { Dialog } from '@mui/material';
+import { Dialog, useMediaQuery, useTheme } from '@mui/material';
 
 import { useIsAuthorized } from '@entities/user';
 import { DialogTypes } from '@shared/constants';
@@ -14,6 +14,9 @@ const DialogView = () => {
   const [searchParams] = useSearchParams();
   const isAuthorized = useIsAuthorized();
 
+  const theme = useTheme();
+  const smMatch = useMediaQuery(theme.breakpoints.down('sm'));
+
   const Component =
     DIALOGS_MAP[key as DialogTypes] &&
     DIALOGS_MAP[key as DialogTypes](isAuthorized, searchParams);
@@ -23,7 +26,7 @@ const DialogView = () => {
   }
 
   return (
-    <Dialog open={isOpen} onClose={onClose} fullWidth>
+    <Dialog open={isOpen} onClose={onClose} fullScreen={smMatch} fullWidth>
       <Component />
     </Dialog>
   );

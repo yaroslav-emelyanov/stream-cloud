@@ -20,7 +20,7 @@ const OrderSelect = () => {
   const order = useOrder();
 
   return (
-    <FormControl size="small" fullWidth>
+    <FormControl className="order-select" size="small" fullWidth>
       <InputLabel id="order-label">Сортировка</InputLabel>
       <Select
         input={<OutlinedInput label="Сортировка" />}

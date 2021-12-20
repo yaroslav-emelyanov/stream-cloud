@@ -20,7 +20,7 @@ const RatingSlider = () => {
   const rating = useRating();
 
   return (
-    <>
+    <div className="rating-slider" style={{ padding: '0 8px' }}>
       <Typography variant="caption">Рейтинг</Typography>
       <Slider
         value={rating}
@@ -33,7 +33,7 @@ const RatingSlider = () => {
         disabled={disabled}
         disableSwap
       />
-    </>
+    </div>
   );
 };
 

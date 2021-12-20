@@ -59,6 +59,9 @@ const WatchDialog = () => {
         )}
       </DialogContent>
       <DialogActions>
+        <Button onClick={() => setSearchParams({})} variant="outlined">
+          Назад
+        </Button>
         <Button
           onClick={() =>
             setSearchParams({

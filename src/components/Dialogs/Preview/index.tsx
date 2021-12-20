@@ -84,6 +84,9 @@ const PreviewDialog = () => {
         )}
       </DialogContent>
       <DialogActions>
+        <Button onClick={() => setSearchParams({})} variant="outlined">
+          Назад
+        </Button>
         {movie ? (
           <Tooltip
             title={isAuthorized ? '' : 'авторизируйтесь для просмотра'}

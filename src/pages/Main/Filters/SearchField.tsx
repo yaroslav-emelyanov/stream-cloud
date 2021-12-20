@@ -10,6 +10,7 @@ const SearchField = () => {
 
   return (
     <TextField
+      className="search-field"
       label="Поиск"
       size="small"
       value={search}

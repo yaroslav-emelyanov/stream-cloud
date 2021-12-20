@@ -19,7 +19,7 @@ const CountrySelect = () => {
   const disabled = useFiltersDisabled();
 
   return (
-    <FormControl size="small" fullWidth>
+    <FormControl className="country-select" size="small" fullWidth>
       <InputLabel id="countries-label">Страны</InputLabel>
       <Select
         labelId="countries-label"

@@ -15,7 +15,7 @@ const GenreSelect = () => {
   const disabled = useFiltersDisabled();
 
   return (
-    <FormControl size="small" fullWidth>
+    <FormControl className="genre-select" size="small" fullWidth>
       <InputLabel id="genres-label">Жанры</InputLabel>
       <Select
         labelId="genres-label"

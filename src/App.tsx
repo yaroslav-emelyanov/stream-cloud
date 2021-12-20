@@ -22,6 +22,13 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          gap: 16,
+        },
+      },
+    },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {

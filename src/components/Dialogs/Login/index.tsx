@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
 import {
+  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -81,6 +82,9 @@ const LoginDialog: React.FC = () => {
         </Typography>
       </DialogContent>
       <DialogActions>
+        <Button onClick={() => setSearchParams({})} variant="outlined">
+          Назад
+        </Button>
         <LoadingButton
           loading={loading}
           form="login"

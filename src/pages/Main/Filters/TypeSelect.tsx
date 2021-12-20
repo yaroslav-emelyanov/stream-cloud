@@ -20,7 +20,7 @@ const TypeSelect = () => {
   const type = useType();
 
   return (
-    <FormControl size="small" fullWidth>
+    <FormControl className="type-select" size="small" fullWidth>
       <InputLabel id="type-label">Тип</InputLabel>
       <Select
         input={<OutlinedInput label="Тип" />}

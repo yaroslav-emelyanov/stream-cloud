@@ -26,7 +26,7 @@ const YearSlider = () => {
   const year = useYear();
 
   return (
-    <>
+    <div className="year-slider" style={{ padding: '0 8px' }}>
       <Typography variant="caption">Год</Typography>
       <Slider
         value={year}
@@ -39,7 +39,7 @@ const YearSlider = () => {
         disabled={disabled}
         disableSwap
       />
-    </>
+    </div>
   );
 };
 
