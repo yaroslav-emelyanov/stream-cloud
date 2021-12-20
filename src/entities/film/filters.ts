@@ -7,6 +7,7 @@ import {
 } from 'effector';
 
 import * as api from '@shared/api';
+import { createLocalStorageStore } from '@shared/utils';
 
 import {
   FiltersResponse,
@@ -32,9 +33,11 @@ export const $genres = createStore<FilterGenre[]>([]).on(
 );
 
 export const selectGenres = createEvent<number[]>();
-export const $selectedGenres = restore<number[]>(selectGenres, []).reset(
-  resetFilters
-);
+export const $selectedGenres = createLocalStorageStore(
+  selectGenres,
+  [],
+  'genres'
+).reset(resetFilters);
 
 export const $countries = createStore<FilterCountry[]>([]).on(
   getFiltersFx.doneData,
@@ -42,26 +45,39 @@ export const $countries = createStore<FilterCountry[]>([]).on(
 );
 
 export const selectCountries = createEvent<number[]>();
-export const $selectedCountries = restore<number[]>(selectCountries, []).reset(
-  resetFilters
-);
+export const $selectedCountries = createLocalStorageStore(
+  selectCountries,
+  [],
+  'countries'
+).reset(resetFilters);
 
 export const setOrder = createEvent<FilmOrders>();
-export const $order = restore(setOrder, FilmOrders.YEAR).reset(resetFilters);
+export const $order = createLocalStorageStore(
+  setOrder,
+  FilmOrders.YEAR,
+  'order'
+).reset(resetFilters);
 
 export const setType = createEvent<FilmTypes>();
-export const $type = restore(setType, FilmTypes.ALL).reset(resetFilters);
+export const $type = createLocalStorageStore(
+  setType,
+  FilmTypes.ALL,
+  'type'
+).reset(resetFilters);
 
 export const setRating = createEvent<[number, number]>();
-export const $rating = restore<[number, number]>(setRating, [0, 10]).reset(
-  resetFilters
-);
+export const $rating = createLocalStorageStore<[number, number]>(
+  setRating,
+  [0, 10],
+  'rating'
+).reset(resetFilters);
 
 export const setYear = createEvent<[number, number]>();
-export const $year = restore<[number, number]>(setYear, [
-  MIN_YEAR,
-  MAX_YEAR,
-]).reset(resetFilters);
+export const $year = createLocalStorageStore<[number, number]>(
+  setYear,
+  [MIN_YEAR, MAX_YEAR],
+  'year'
+).reset(resetFilters);
 
 export const $filters = combine({
   genres: $selectedGenres,
