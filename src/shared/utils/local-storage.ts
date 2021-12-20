@@ -1,10 +1,15 @@
-import { restore, Event } from 'effector';
+import { restore, Event, createEffect } from 'effector';
+import { debounce } from 'patronum/debounce';
 
 export const createLocalStorageStore = <T>(
   event: Event<T>,
   defaultState: T,
-  storageKey: string
+  storageKey: string,
+  delay: number = 1000
 ) => {
+  const toLocalStoreFx = createEffect<T, void>((state) =>
+    localStorage.setItem(storageKey, JSON.stringify(state))
+  );
   const $store = restore<T>(event, defaultState);
 
   try {
@@ -12,9 +17,11 @@ export const createLocalStorageStore = <T>(
     event(state);
   } catch (err) {}
 
-  $store.watch((newState) =>
-    localStorage.setItem(storageKey, JSON.stringify(newState))
-  );
+  debounce({
+    source: $store,
+    timeout: delay,
+    target: toLocalStoreFx,
+  });
 
   return $store;
 };
