@@ -48,11 +48,15 @@ export const getFilmsBySearchFx = createEffect<string, FilmResponse>(
 $currentPage.on(getFilmsFx.done, (_, { params }) => params.page);
 $lastPage.on(getFilmsFx.doneData, (_, { pagesCount }) => pagesCount);
 
+export const getFilmsByPaginationFx = attach({
+  effect: getFilmsFx,
+});
+
 sample({
   clock: nextPage,
   source: [$currentPage, $filters],
   fn: ([page, filters]) => ({ page, ...filters }),
-  target: getFilmsFx,
+  target: getFilmsByPaginationFx,
 });
 
 export const getFilmsByFiltersFx = attach({
@@ -67,7 +71,10 @@ debounce({
 });
 
 const $defaultFilms = createStore<Film[]>([])
-  .on(getFilmsFx.doneData, (prevFilms, { films }) => [...prevFilms, ...films])
+  .on(getFilmsByPaginationFx.doneData, (prevFilms, { films }) => [
+    ...prevFilms,
+    ...films,
+  ])
   .on(getFilmsByFiltersFx.doneData, (_, { films }) => films);
 
 const $searchFilms = createStore<Film[]>([]).on(
