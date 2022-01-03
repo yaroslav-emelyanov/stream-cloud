@@ -16,11 +16,13 @@ import { $currentPage, $lastPage, nextPage } from './pagination';
 
 describe('film', () => {
   it('get films by pagination', async () => {
+    const getFilmsFxMock = jest.fn().mockReturnValue({
+      pagesCount: 2,
+      films: ['FAKE_FILM_1', 'FAKE_FILM_2'],
+    });
+
     const scope = fork({
-      handlers: new Map().set(getFilmsFx, () => ({
-        pagesCount: 2,
-        films: ['FAKE_FILM_1', 'FAKE_FILM_2'],
-      })),
+      handlers: [[getFilmsFx, getFilmsFxMock]],
     });
 
     await allSettled(nextPage, {
