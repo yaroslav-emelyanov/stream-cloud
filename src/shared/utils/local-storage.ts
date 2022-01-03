@@ -12,6 +12,8 @@ export const createLocalStorageStore = <T>(
   );
   const $store = restore<T>(event, defaultState);
 
+  $store.sid = storageKey;
+
   try {
     const state = JSON.parse(localStorage.getItem(storageKey) || '');
     event(state);
