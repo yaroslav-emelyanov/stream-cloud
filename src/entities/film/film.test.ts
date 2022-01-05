@@ -29,6 +29,7 @@ describe('film', () => {
       scope,
     });
 
+    expect(getFilmsFxMock).toHaveBeenCalledTimes(1);
     expect(scope.getState($currentPage)).toBe(1);
     expect(scope.getState($lastPage)).toBe(2);
     expect(scope.getState($films)).toEqual(['FAKE_FILM_1', 'FAKE_FILM_2']);
@@ -37,6 +38,7 @@ describe('film', () => {
       scope,
     });
 
+    expect(getFilmsFxMock).toHaveBeenCalledTimes(2);
     expect(scope.getState($currentPage)).toBe(2);
   });
 
