@@ -29,9 +29,10 @@ describe('film', () => {
       scope,
     });
 
+    expect(scope.getState($lastPage)).toBe(2);
+
     expect(getFilmsFxMock).toHaveBeenCalledTimes(1);
     expect(scope.getState($currentPage)).toBe(1);
-    expect(scope.getState($lastPage)).toBe(2);
     expect(scope.getState($films)).toEqual(['FAKE_FILM_1', 'FAKE_FILM_2']);
 
     await allSettled(nextPage, {
@@ -40,6 +41,12 @@ describe('film', () => {
 
     expect(getFilmsFxMock).toHaveBeenCalledTimes(2);
     expect(scope.getState($currentPage)).toBe(2);
+    expect(scope.getState($films)).toEqual([
+      'FAKE_FILM_1',
+      'FAKE_FILM_2',
+      'FAKE_FILM_1',
+      'FAKE_FILM_2',
+    ]);
   });
 
   it('get films by filters', async () => {
