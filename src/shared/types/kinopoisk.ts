@@ -17,7 +17,7 @@ export interface KinopoiskMovie {
   reviewsCount: number;
   ratingGoodReview: number;
   ratingGoodReviewVoteCount: number;
-  ratingKinopoisk: number;
+  ratingKinopoisk: number | null;
   ratingKinopoiskVoteCount: number;
   ratingImdb: number;
   ratingImdbVoteCount: number;
