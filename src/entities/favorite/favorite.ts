@@ -1,23 +1,24 @@
-import { createEvent, createStore } from 'effector';
+import { KinopoiskMovie } from '@shared/types';
+import { createEffect, createEvent, createStore } from 'effector';
 
-import { FavoriteMovie } from './types';
+import * as api from '@shared/api';
+import { Favorite } from './types';
 
 const STORAGE_KEY = 'favorites';
 const LIMIT_STORAGE = 30;
 
-let initState = [];
+let initState: Favorite[] = [];
 
 try {
   const storedFavorites = localStorage.getItem(STORAGE_KEY);
   if (storedFavorites) {
-    const favorites = JSON.parse(storedFavorites);
-    initState = favorites;
+    initState = JSON.parse(storedFavorites);
   }
 } catch (err) {}
 
 export const likeFilm = createEvent<string>();
 
-export const $favoriteMovies = createStore<FavoriteMovie[]>(initState).on(
+export const $favorites = createStore<Favorite[]>(initState).on(
   likeFilm,
   (favorites, kinopoiskId) => {
     const filteredFavorites = favorites.filter(
@@ -39,6 +40,32 @@ export const $favoriteMovies = createStore<FavoriteMovie[]>(initState).on(
   }
 );
 
-$favoriteMovies.watch((list) =>
+$favorites.watch((list) =>
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list))
 );
+
+export const $favoriteIds = $favorites.map((movies) =>
+  movies.map((m) => m.kinopoiskId)
+);
+
+const getFavoriteMovieFx = createEffect<string | null, KinopoiskMovie>(
+  (kinopoiskId) =>
+    api.kinopoisk
+      .get<KinopoiskMovie>(`/v2.2/films/${kinopoiskId}`)
+      .then((response) => response.data)
+);
+
+export const getMoviesByFavoriteIdsFx = createEffect<string[], void>(
+  async (favoriteIds) => {
+    for (const favoriteId of favoriteIds) {
+      await getFavoriteMovieFx(favoriteId);
+    }
+  }
+);
+
+export const $favoriteMovies = createStore<Record<string, KinopoiskMovie>>(
+  {}
+).on(getFavoriteMovieFx.doneData, (prevMovies, newMovie) => ({
+  ...prevMovies,
+  [newMovie.kinopoiskId.toString()]: newMovie,
+}));

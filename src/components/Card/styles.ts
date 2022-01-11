@@ -14,6 +14,7 @@ const WIDTH_CARD_MEDIA = 160;
 
 export const Card = styled(MuiCard)(() => ({
   width: WIDTH_CARD_MEDIA,
+  position: 'relative',
   boxShadow: 'none',
 }));
 
@@ -44,10 +45,12 @@ export const Chip = styled(MuiChip)(({ theme }) => ({
   position: 'absolute',
   left: theme.spacing(1),
   top: theme.spacing(1),
+  zIndex: 1,
 }));
 
 export const IconButton = styled(MuiIconButton)(({ theme }) => ({
   position: 'absolute',
   right: theme.spacing(0.25),
   top: theme.spacing(0.25),
+  zIndex: 1,
 }));

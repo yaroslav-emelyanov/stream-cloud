@@ -57,6 +57,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        },
+      },
+    },
     MuiTabs: {
       styleOverrides: {
         indicator: {

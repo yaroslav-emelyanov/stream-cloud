@@ -4,10 +4,15 @@ import dayjs from 'dayjs';
 
 import Card from '@components/Card';
 import { DialogTypes } from '@shared/constants';
-import { FavoriteMovie, likeFilm, useIsFavorite } from '@entities/favorite';
+import {
+  Favorite,
+  likeFilm,
+  useFavoriteMovie,
+  useIsFavorite,
+} from '@entities/favorite';
 
 interface HistoryCardProps {
-  favoriteMovie: FavoriteMovie;
+  favorite: Favorite;
   prevCreated?: string;
 }
 
@@ -15,18 +20,19 @@ const DATE_FORMAT = 'DD.MM.YYYY';
 const DATE_NOW = dayjs().format(DATE_FORMAT);
 
 const FavoriteCard: React.FC<HistoryCardProps> = ({
-  favoriteMovie,
+  favorite,
   prevCreated,
 }) => {
-  const isFavorite = useIsFavorite(favoriteMovie.kinopoiskId);
+  const favoriteMovie = useFavoriteMovie(favorite.kinopoiskId);
+  const isFavorite = useIsFavorite(favorite.kinopoiskId);
   const [, setSearchParams] = useSearchParams();
 
   const [date, prevDate] = useMemo(
     () => [
-      dayjs(favoriteMovie.created).format(DATE_FORMAT),
+      dayjs(favorite.created).format(DATE_FORMAT),
       prevCreated ? dayjs(prevCreated).format(DATE_FORMAT) : null,
     ],
-    [favoriteMovie.created, prevCreated]
+    [favorite.created, prevCreated]
   );
 
   return (
@@ -41,12 +47,25 @@ const FavoriteCard: React.FC<HistoryCardProps> = ({
         onClick={() =>
           setSearchParams({
             dialog: DialogTypes.PREVIEW,
-            kinopoisk_id: favoriteMovie.kinopoiskId.toString(),
+            kinopoisk_id: favorite.kinopoiskId.toString(),
           })
         }
-        onClickIcon={() => likeFilm(favoriteMovie.kinopoiskId)}
+        rating={favoriteMovie?.ratingKinopoisk?.toString()}
+        description={
+          <>
+            <div>
+              {[favoriteMovie?.year, favoriteMovie?.genres[0]?.genre]
+                .filter(Boolean)
+                .join(', ')}
+            </div>
+            <div>{favoriteMovie?.countries[0]?.country}</div>
+          </>
+        }
+        onClickIcon={() => likeFilm(favorite.kinopoiskId)}
         isFavorite={isFavorite}
-        title={'movie.nameRu'}
+        posterUrl={favoriteMovie?.posterUrlPreview}
+        title={favoriteMovie?.nameRu || ''}
+        loading={!favoriteMovie}
       />
     </>
   );

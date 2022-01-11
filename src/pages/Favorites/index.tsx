@@ -1,18 +1,21 @@
 import React from 'react';
 
 import FavoriteCard from './FavoriteCard';
-import { useFavoriteMovies } from '@entities/favorite';
+import { useFavorites } from '@entities/favorite';
 
 import { PageContainer } from './styles';
+import { usePageGate } from './model';
 
 const FavoritesPage = () => {
-  const favoriteMovies = useFavoriteMovies();
+  const favorites = useFavorites();
+
+  usePageGate();
 
   return (
     <PageContainer>
-      {favoriteMovies.map((favorite, index, list) => (
+      {favorites.map((favorite, index, list) => (
         <FavoriteCard
-          favoriteMovie={favorite}
+          favorite={favorite}
           prevCreated={list[index - 1]?.created}
           key={favorite.kinopoiskId}
         />

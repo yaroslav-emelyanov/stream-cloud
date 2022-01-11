@@ -18,12 +18,12 @@ import {
 interface CardProps {
   title: string;
   onClick?: () => void;
-  onClickIcon: () => void;
+  onClickIcon?: () => void;
   rating?: string;
   description?: React.ReactNode;
   loading?: boolean;
   posterUrl?: string;
-  isFavorite: boolean;
+  isFavorite?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -38,6 +38,10 @@ const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <MuiCard>
+      {rating && <Chip label={rating} size="small" />}
+      <IconButton onClick={onClickIcon}>
+        {isFavorite ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
+      </IconButton>
       <CardActionArea
         style={{ position: 'relative' }}
         onClick={onClick}
@@ -55,18 +59,6 @@ const Card: React.FC<CardProps> = ({
         ) : (
           <NotFoundCardMedia>Постер не найден</NotFoundCardMedia>
         )}
-        {rating && <Chip label={rating} color="primary" size="small" />}
-        <IconButton
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (onClickIcon) {
-              onClickIcon();
-            }
-          }}
-        >
-          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-        </IconButton>
         <CardContent>
           <Typography variant="caption" component="div">
             <b>{title}</b>
