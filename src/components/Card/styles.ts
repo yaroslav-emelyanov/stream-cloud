@@ -4,6 +4,7 @@ import {
   Card as MuiCard,
   Chip as MuiChip,
   Skeleton as MuiSkeleton,
+  IconButton as MuiIconButton,
   CardContent as MuiCardContent,
   CardActionArea as MuiCardActionArea,
 } from '@mui/material';
@@ -43,4 +44,10 @@ export const Chip = styled(MuiChip)(({ theme }) => ({
   position: 'absolute',
   left: theme.spacing(1),
   top: theme.spacing(1),
+}));
+
+export const IconButton = styled(MuiIconButton)(({ theme }) => ({
+  position: 'absolute',
+  right: theme.spacing(0.25),
+  top: theme.spacing(0.25),
 }));

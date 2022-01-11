@@ -1,10 +1,13 @@
 import React from 'react';
 
 import { CardMedia, Typography } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import {
   Chip,
   Skeleton,
+  IconButton,
   CardContent,
   CardActionArea,
   Card as MuiCard,
@@ -15,19 +18,23 @@ import {
 interface CardProps {
   title: string;
   onClick?: () => void;
+  onClickIcon: () => void;
   rating?: string;
   description?: React.ReactNode;
   loading?: boolean;
   posterUrl?: string;
+  isFavorite: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
   onClick,
+  onClickIcon,
   title,
   rating,
   description,
   posterUrl,
   loading,
+  isFavorite,
 }) => {
   return (
     <MuiCard>
@@ -49,6 +56,17 @@ const Card: React.FC<CardProps> = ({
           <NotFoundCardMedia>Постер не найден</NotFoundCardMedia>
         )}
         {rating && <Chip label={rating} color="primary" size="small" />}
+        <IconButton
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onClickIcon) {
+              onClickIcon();
+            }
+          }}
+        >
+          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
         <CardContent>
           <Typography variant="caption" component="div">
             <b>{title}</b>

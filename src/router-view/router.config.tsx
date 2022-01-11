@@ -6,6 +6,7 @@ import MainPage from '../pages/Main';
 import HistoryPage from '../pages/History';
 import PremiersPage from '../pages/Premiers';
 import NotFoundPage from '../pages/NotFound';
+import FavoritesPage from '../pages/Favorites';
 
 export const routerConfig: RouteObject[] = [
   {
@@ -29,6 +30,14 @@ export const routerConfig: RouteObject[] = [
     element: (
       <MainLayout>
         <HistoryPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/favorites',
+    element: (
+      <MainLayout>
+        <FavoritesPage />
       </MainLayout>
     ),
   },

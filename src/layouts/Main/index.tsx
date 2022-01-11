@@ -36,6 +36,10 @@ const MainLayout: React.FC = ({ children }) => {
               to: '/',
             },
             {
+              label: 'Избранное',
+              to: '/favorites',
+            },
+            {
               label: 'История',
               to: '/history',
             },

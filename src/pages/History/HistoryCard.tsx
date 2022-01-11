@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import Card from '@components/Card';
 import { DialogTypes } from '@shared/constants';
 import { HistoryMovie } from '@entities/history';
+import { likeFilm, useIsFavorite } from '@entities/favorite';
 
 interface HistoryCardProps {
   movie: HistoryMovie;
@@ -18,6 +19,7 @@ const HistoryCard: React.FC<HistoryCardProps> = ({
   movie,
   prevHistoryDate,
 }) => {
+  const isFavorite = useIsFavorite(movie.kinopoiskId.toString());
   const [, setSearchParams] = useSearchParams();
 
   const [date, prevDate] = useMemo(
@@ -43,6 +45,7 @@ const HistoryCard: React.FC<HistoryCardProps> = ({
             kinopoisk_id: movie.kinopoiskId.toString(),
           })
         }
+        onClickIcon={() => likeFilm(movie.kinopoiskId.toString())}
         rating={movie.ratingKinopoisk?.toString()}
         description={
           <>
@@ -52,6 +55,7 @@ const HistoryCard: React.FC<HistoryCardProps> = ({
             <div>{movie.countries[0]?.country}</div>
           </>
         }
+        isFavorite={isFavorite}
         posterUrl={movie.posterUrlPreview}
         title={movie.nameRu}
       />
