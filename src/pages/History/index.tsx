@@ -1,20 +1,23 @@
 import React from 'react';
 
-import { useMovieHistory } from '@entities/history';
+import { useHistory } from '@entities/history';
 
 import HistoryCard from './HistoryCard';
 import { PageContainer } from './styles';
+import { usePageGate } from './model';
 
 const HistoryPage = () => {
-  const movies = useMovieHistory();
+  const history = useHistory();
+
+  usePageGate();
 
   return (
     <PageContainer>
-      {movies.map((movie, index, list) => (
+      {history.map((item, index, list) => (
         <HistoryCard
-          movie={movie}
-          prevHistoryDate={list[index - 1]?.added_to_history}
-          key={movie.kinopoiskId}
+          historyItem={item}
+          prevHistoryDate={list[index - 1]?.created}
+          key={item.kinopoiskId}
         />
       ))}
     </PageContainer>

@@ -2,7 +2,7 @@ import { combine, createEffect, guard, restore, sample, Unit } from 'effector';
 import { pending } from 'patronum/pending';
 
 import * as api from '@shared/api';
-import { addMovieToHistory } from '@entities/history';
+import { addToHistory } from '@entities/history';
 import {
   VCDNResponse,
   VCDNShortData,
@@ -71,7 +71,8 @@ export const $dialogMovie = combine({
 
 sample({
   clock: getMovieInfoFx.doneData,
-  target: addMovieToHistory,
+  fn: (movie) => movie.kinopoiskId.toString(),
+  target: addToHistory,
 });
 
 export const watchDialogMovie = (clock: Unit<string | null>) => {
