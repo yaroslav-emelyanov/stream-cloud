@@ -13,7 +13,7 @@ import {
   setOrder,
   useFiltersDisabled,
   useOrder,
-} from '@entities/film';
+} from '@entities/films';
 
 const OrderSelect = () => {
   const disabled = useFiltersDisabled();

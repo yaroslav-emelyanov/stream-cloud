@@ -1,2 +1,2 @@
-export * from './film';
+export * from './page';
 export * from './hooks';

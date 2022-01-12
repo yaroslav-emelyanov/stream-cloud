@@ -13,7 +13,7 @@ import {
   useType,
   FilmTypes,
   useFiltersDisabled,
-} from '@entities/film';
+} from '@entities/films';
 
 const TypeSelect = () => {
   const disabled = useFiltersDisabled();

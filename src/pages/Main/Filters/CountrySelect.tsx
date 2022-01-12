@@ -12,7 +12,7 @@ import {
   selectCountries,
   useCountries,
   useFiltersDisabled,
-} from '@entities/film';
+} from '@entities/films';
 
 const CountrySelect = () => {
   const { countries, selectedCountries } = useCountries();

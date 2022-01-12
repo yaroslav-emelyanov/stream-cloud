@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Slider, Typography } from '@mui/material';
 
-import { useRating, setRating, useFiltersDisabled } from '@entities/film';
+import { useRating, setRating, useFiltersDisabled } from '@entities/films';
 
 const marks = [
   {

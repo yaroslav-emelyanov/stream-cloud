@@ -1,7 +1,7 @@
 import { guard } from 'effector';
 import { createGate } from 'effector-react';
 
-import { $currentPage, getFiltersFx, nextPage } from '@entities/film';
+import { $currentPage, getFiltersFx, nextPage } from '@entities/films';
 
 export const Page = createGate('main-page');
 

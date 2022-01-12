@@ -1,104 +1,59 @@
-import {
-  createEffect,
-  createStore,
-  attach,
-  sample,
-  combine,
-  guard,
-} from 'effector';
-import { debounce } from 'patronum/debounce';
+import { createEffect, restore } from 'effector';
 
 import * as api from '@shared/api';
+import {
+  KinopoiskFilm,
+  KinopoiskResponse,
+  KinopoiskSimilarFilm,
+  KinopoiskTrailer,
+  VCDNResponse,
+  VCDNShortData,
+} from '@shared/types';
 
-import { nextPage } from './pagination';
-import { $filters, $search } from './filters';
-import { $currentPage, $lastPage } from './pagination';
-import { GetFilmsParams, FilmResponse, Film } from './types';
-
-export const getFilmsFx = createEffect<GetFilmsParams, FilmResponse>(
-  ({ page, order, rating, year, type, genres, countries }) =>
+export const getFilmFx = createEffect<string | undefined, KinopoiskFilm>(
+  (kinopoiskId) =>
     api.kinopoisk
-      .get<FilmResponse>('/v2.1/films/search-by-filters', {
-        params: {
-          page,
-          order,
-          type,
-          ratingFrom: rating[0],
-          ratingTo: rating[1],
-          yearFrom: year[0],
-          yearTo: year[1],
-          genre: genres.length ? genres.join(',') : undefined,
-          country: countries.length ? countries.join(',') : undefined,
-        },
-      })
+      .get<KinopoiskFilm>(`/v2.2/films/${kinopoiskId}`)
       .then((response) => response.data)
 );
 
-export const getFilmsBySearchFx = createEffect<string, FilmResponse>(
-  (keyword) =>
-    api.kinopoisk
-      .get<FilmResponse>('/v2.1/films/search-by-keyword', {
+export const getIframeSrcFx = createEffect<string | undefined, string>(
+  (kinopoisk_id) =>
+    api.videocdn
+      .get<VCDNResponse<VCDNShortData>>('/short', {
         params: {
-          keyword,
+          kinopoisk_id,
         },
       })
-      .then((response) => response.data)
+      .then((response) => response.data.data[0].iframe_src)
 );
 
-$currentPage.on(getFilmsFx.done, (_, { params }) => params.page);
-$lastPage.on(getFilmsFx.doneData, (_, { pagesCount }) => pagesCount);
-
-export const getFilmsByPaginationFx = attach({
-  effect: getFilmsFx,
-});
-
-sample({
-  clock: nextPage,
-  source: [$currentPage, $filters],
-  fn: ([page, filters]) => ({ page, ...filters }),
-  target: getFilmsByPaginationFx,
-});
-
-export const getFilmsByFiltersFx = attach({
-  effect: getFilmsFx,
-  mapParams: (params: Omit<GetFilmsParams, 'page'>) => ({ page: 1, ...params }),
-});
-
-debounce({
-  source: $filters,
-  timeout: 300,
-  target: getFilmsByFiltersFx,
-});
-
-const $defaultFilms = createStore<Film[]>([])
-  .on(getFilmsByPaginationFx.doneData, (prevFilms, { films }) => [
-    ...prevFilms,
-    ...films,
-  ])
-  .on(getFilmsByFiltersFx.doneData, (_, { films }) => films);
-
-const $searchFilms = createStore<Film[]>([]).on(
-  getFilmsBySearchFx.doneData,
-  (_, { films }) => films
+export const getFilmTrailerFx = createEffect<
+  string | undefined,
+  KinopoiskTrailer | null
+>((kinopoiskId) =>
+  api.kinopoisk
+    .get<KinopoiskResponse<KinopoiskTrailer>>(
+      `/v2.2/films/${kinopoiskId}/videos`
+    )
+    .then(
+      (response) =>
+        response.data.items.find((item) => item.site === 'YOUTUBE') || null
+    )
 );
 
-const searchTrigger = guard({
-  source: $search,
-  filter: Boolean,
-});
-
-debounce({
-  source: searchTrigger,
-  timeout: 500,
-  target: getFilmsBySearchFx,
-});
-
-export const $films = combine(
-  {
-    defaultFilms: $defaultFilms,
-    searchFilms: $searchFilms,
-    search: $search,
-  },
-  ({ defaultFilms, searchFilms, search }) =>
-    search ? searchFilms : defaultFilms
+export const getSimilarFilmsFx = createEffect<
+  string | undefined,
+  KinopoiskSimilarFilm[]
+>((kinopoiskId) =>
+  api.kinopoisk
+    .get<KinopoiskResponse<KinopoiskSimilarFilm>>(
+      `/v2.2/films/${kinopoiskId}/similars`
+    )
+    .then((response) => response.data.items)
 );
+
+export const $film = restore(getFilmFx.doneData, null);
+export const $inframeSrc = restore(getIframeSrcFx.doneData, null);
+export const $filmTrailer = restore(getFilmTrailerFx.doneData, null);
+export const $similarFilms = restore(getSimilarFilmsFx.doneData, []);

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import Card from '@components/Card';
-import { Film } from '@entities/film';
+import { Film } from '@entities/films';
 import { likeFilm, useIsFavorite } from '@entities/favorite';
 import { DialogTypes } from '@shared/constants';
 

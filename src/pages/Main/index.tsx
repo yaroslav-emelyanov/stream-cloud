@@ -9,7 +9,7 @@ import {
   useHasMorePages,
   useLoading,
   useSearchLoading,
-} from '@entities/film';
+} from '@entities/films';
 
 import Filters from './Filters';
 import FiltersProgress from './FiltersProgress';

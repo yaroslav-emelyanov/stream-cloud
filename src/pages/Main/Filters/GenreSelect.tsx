@@ -8,7 +8,7 @@ import {
   Select,
 } from '@mui/material';
 
-import { selectGenres, useFiltersDisabled, useGenres } from '@entities/film';
+import { selectGenres, useFiltersDisabled, useGenres } from '@entities/films';
 
 const GenreSelect = () => {
   const { genres, selectedGenres } = useGenres();

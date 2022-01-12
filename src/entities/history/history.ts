@@ -1,7 +1,7 @@
-import { KinopoiskMovie } from '@shared/types';
 import { createEffect, createEvent, createStore } from 'effector';
 
 import * as api from '@shared/api';
+import { KinopoiskFilm } from '@shared/types';
 
 import { HistoryItem } from './types';
 
@@ -47,24 +47,25 @@ export const $historyIds = $history.map((list) =>
   list.map((item) => item.kinopoiskId)
 );
 
-const getHistoryMovieFx = createEffect<string | null, KinopoiskMovie>(
+const getHistoryFilmFx = createEffect<string | null, KinopoiskFilm>(
   (kinopoiskId) =>
     api.kinopoisk
-      .get<KinopoiskMovie>(`/v2.2/films/${kinopoiskId}`)
+      .get<KinopoiskFilm>(`/v2.2/films/${kinopoiskId}`)
       .then((response) => response.data)
 );
 
-export const getMoviesByHistoryIdsFx = createEffect<string[], void>(
+export const getFilmsByHistoryIdsFx = createEffect<string[], void>(
   async (historyIds) => {
     for (const historyId of historyIds) {
-      await getHistoryMovieFx(historyId);
+      await getHistoryFilmFx(historyId);
     }
   }
 );
 
-export const $historyMovies = createStore<Record<string, KinopoiskMovie>>(
-  {}
-).on(getHistoryMovieFx.doneData, (prevMovies, newMovie) => ({
-  ...prevMovies,
-  [newMovie.kinopoiskId.toString()]: newMovie,
-}));
+export const $historyFilms = createStore<Record<string, KinopoiskFilm>>({}).on(
+  getHistoryFilmFx.doneData,
+  (prevFilms, film) => ({
+    ...prevFilms,
+    [film.kinopoiskId.toString()]: film,
+  })
+);

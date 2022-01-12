@@ -8,7 +8,7 @@ import {
   MIN_YEAR,
   MAX_YEAR,
   useFiltersDisabled,
-} from '@entities/film';
+} from '@entities/films';
 
 const marks = [
   {

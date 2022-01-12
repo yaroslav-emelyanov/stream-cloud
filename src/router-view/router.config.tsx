@@ -2,6 +2,7 @@ import { RouteObject } from 'react-router-dom';
 
 import MainLayout from '../layouts/Main';
 
+import FilmPage from '../pages/Film';
 import MainPage from '../pages/Main';
 import HistoryPage from '../pages/History';
 import PremiersPage from '../pages/Premiers';
@@ -38,6 +39,14 @@ export const routerConfig: RouteObject[] = [
     element: (
       <MainLayout>
         <FavoritesPage />
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/film/:kinopoiskId',
+    element: (
+      <MainLayout>
+        <FilmPage />
       </MainLayout>
     ),
   },

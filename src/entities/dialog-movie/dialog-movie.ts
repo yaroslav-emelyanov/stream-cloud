@@ -6,10 +6,10 @@ import { addToHistory } from '@entities/history';
 import {
   VCDNResponse,
   VCDNShortData,
-  KinopoiskMovie,
+  KinopoiskFilm,
   KinopoiskTrailer,
   KinopoiskResponse,
-  KinopoiskSimilarMovie,
+  KinopoiskSimilarFilm,
 } from '@shared/types';
 
 const getMovieFx = createEffect<string | null, VCDNShortData | null>(
@@ -35,17 +35,17 @@ const getTrailerFx = createEffect<string | null, KinopoiskTrailer | null>(
       )
 );
 
-const getMovieInfoFx = createEffect<string | null, KinopoiskMovie>(
+const getMovieInfoFx = createEffect<string | null, KinopoiskFilm>(
   (kinopoiskId) =>
     api.kinopoisk
-      .get<KinopoiskMovie>(`/v2.2/films/${kinopoiskId}`)
+      .get<KinopoiskFilm>(`/v2.2/films/${kinopoiskId}`)
       .then((response) => response.data)
 );
 
-const getSimilarMoviesFx = createEffect<string | null, KinopoiskSimilarMovie[]>(
+const getSimilarMoviesFx = createEffect<string | null, KinopoiskSimilarFilm[]>(
   (kinopoiskId) =>
     api.kinopoisk
-      .get<KinopoiskResponse<KinopoiskSimilarMovie>>(
+      .get<KinopoiskResponse<KinopoiskSimilarFilm>>(
         `/v2.2/films/${kinopoiskId}/similars`
       )
       .then((response) => response.data.items)

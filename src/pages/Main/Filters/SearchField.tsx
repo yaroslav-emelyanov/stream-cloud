@@ -3,7 +3,7 @@ import React from 'react';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 
-import { useSearch, setSearch } from '@entities/film';
+import { useSearch, setSearch } from '@entities/films';
 
 const SearchField = () => {
   const search = useSearch();

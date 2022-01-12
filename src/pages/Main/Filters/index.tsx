@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button } from '@mui/material';
 
-import { resetFilters, useSearch } from '@entities/film';
+import { resetFilters, useSearch } from '@entities/films';
 
 import YearSlider from './YearSlider';
 import RatingSlider from './RatingSlider';

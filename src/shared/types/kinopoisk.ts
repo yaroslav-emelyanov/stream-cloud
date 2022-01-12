@@ -6,7 +6,7 @@ export interface KinopoiskGenre {
   genre: string;
 }
 
-export interface KinopoiskMovie {
+export interface KinopoiskFilm {
   kinopoiskId: number;
   imdbId: string;
   nameRu: string;
@@ -51,7 +51,7 @@ export interface KinopoiskMovie {
   completed: boolean;
 }
 
-export interface KinopoiskSimilarMovie {
+export interface KinopoiskSimilarFilm {
   filmId: number;
   nameRu: string;
   nameEn: string;
@@ -60,14 +60,6 @@ export interface KinopoiskSimilarMovie {
   posterUrlPreview: string;
   relationType: string;
 }
-
-export interface KinopoiskMovieListItem {
-  movieId: number;
-  kinopoiskId: string;
-  info: KinopoiskMovie | null;
-  loading: boolean;
-}
-
 export interface KinopoiskTrailer {
   url: string;
   name: string;

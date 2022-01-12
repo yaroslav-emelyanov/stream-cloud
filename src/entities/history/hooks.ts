@@ -1,12 +1,12 @@
 import { useStore, useStoreMap } from 'effector-react';
 
-import { $history, $historyMovies } from './history';
+import { $history, $historyFilms } from './history';
 
 export const useHistory = () => useStore($history);
 
 export const useHistoryMovie = (kinopoiskId: string) =>
   useStoreMap({
-    store: $historyMovies,
+    store: $historyFilms,
     keys: [kinopoiskId],
-    fn: (movies, [id]) => movies[id],
+    fn: (films, [id]) => films[id],
   });

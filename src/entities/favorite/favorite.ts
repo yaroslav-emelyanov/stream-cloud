@@ -1,7 +1,7 @@
-import { KinopoiskMovie } from '@shared/types';
 import { createEffect, createEvent, createStore } from 'effector';
 
 import * as api from '@shared/api';
+import { KinopoiskFilm } from '@shared/types';
 import { Favorite } from './types';
 
 const STORAGE_KEY = 'favorites';
@@ -48,10 +48,10 @@ export const $favoriteIds = $favorites.map((movies) =>
   movies.map((m) => m.kinopoiskId)
 );
 
-const getFavoriteMovieFx = createEffect<string | null, KinopoiskMovie>(
+const getFavoriteMovieFx = createEffect<string | null, KinopoiskFilm>(
   (kinopoiskId) =>
     api.kinopoisk
-      .get<KinopoiskMovie>(`/v2.2/films/${kinopoiskId}`)
+      .get<KinopoiskFilm>(`/v2.2/films/${kinopoiskId}`)
       .then((response) => response.data)
 );
 
@@ -63,7 +63,7 @@ export const getMoviesByFavoriteIdsFx = createEffect<string[], void>(
   }
 );
 
-export const $favoriteMovies = createStore<Record<string, KinopoiskMovie>>(
+export const $favoriteMovies = createStore<Record<string, KinopoiskFilm>>(
   {}
 ).on(getFavoriteMovieFx.doneData, (prevMovies, newMovie) => ({
   ...prevMovies,
