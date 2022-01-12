@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStore } from 'effector-react';
 import { useForm } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
 
 import {
   Button,
@@ -14,23 +13,20 @@ import {
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import {
-  DialogTypes,
-  EMAIL_REGEX,
-  PASSWORD_MIN_LENGTH,
-} from '@shared/constants';
+import { EMAIL_REGEX, PASSWORD_MIN_LENGTH } from '@shared/constants';
+import { useNav } from '@shared/hooks';
 
 import { Form } from './styles';
 import { IForm, loginFx } from './model';
 
 const LoginDialog: React.FC = () => {
-  const [, setSearchParams] = useSearchParams();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<IForm>();
   const loading = useStore(loginFx.pending);
+  const nav = useNav();
 
   return (
     <>
@@ -72,9 +68,7 @@ const LoginDialog: React.FC = () => {
           Ещё не зарегистрированы?{' '}
           <Link
             component="button"
-            onClick={() =>
-              setSearchParams({ dialog: DialogTypes.REGISTERATION })
-            }
+            onClick={nav.open.registeration}
             underline="none"
           >
             Регистрация
@@ -82,7 +76,7 @@ const LoginDialog: React.FC = () => {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => setSearchParams({})} variant="outlined">
+        <Button onClick={nav.close} variant="outlined">
           Назад
         </Button>
         <LoadingButton

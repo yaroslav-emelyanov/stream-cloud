@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 
 export const PageContainer = styled('div')(({ theme }) => ({
-  maxWidth: 1240,
+  maxWidth: 1280,
   margin: '0 auto',
   padding: theme.spacing(4),
 }));

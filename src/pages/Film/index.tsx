@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { CircularProgress, Box, IconButton, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -12,6 +12,7 @@ import {
   useIframeSrc,
   useSimilarFilms,
 } from '@entities/film';
+import { useNav } from '@shared/hooks';
 import { likeFilm, useIsFavorite } from '@entities/favorite';
 import Poster from '@components/Poster';
 
@@ -24,7 +25,7 @@ import {
   SimilarList,
   Media,
 } from './styles';
-import SimilarCard from '@components/Dialogs/Preview/SimilarCard';
+import SimilarCard from './SimilarCard';
 
 const FilmPage = () => {
   const params = useParams<'kinopoiskId'>();
@@ -34,8 +35,8 @@ const FilmPage = () => {
   const loading = useFilmLoading();
   const trailer = useFilmTrailer();
   const iframeSrc = useIframeSrc();
-  const navigate = useNavigate();
   const film = useFilm();
+  const nav = useNav();
 
   useFilmPageGate(params);
 
@@ -55,7 +56,7 @@ const FilmPage = () => {
   return (
     <PageContainer>
       <Header>
-        <IconButton onClick={() => navigate(-1)}>
+        <IconButton onClick={nav.back}>
           <ArrowBackIcon />
         </IconButton>
         <div>

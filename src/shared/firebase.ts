@@ -2,12 +2,12 @@ import { initializeApp } from '@firebase/app';
 import { getAuth } from '@firebase/auth';
 
 const config = {
-  apiKey: 'AIzaSyBcDQL5euuXp6wcXTORprH__PZzeb7aRMo',
-  authDomain: 'strong-eon-246706.firebaseapp.com',
-  projectId: 'strong-eon-246706',
-  storageBucket: 'strong-eon-246706.appspot.com',
-  messagingSenderId: '954403703705',
-  appId: '1:954403703705:web:2f6dce0705bbdaf111a108',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 const app = initializeApp(config);

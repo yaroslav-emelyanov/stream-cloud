@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import Card from '@components/Card';
-import { DialogTypes } from '@shared/constants';
 import {
   Favorite,
   likeFilm,
   useFavoriteMovie,
   useIsFavorite,
 } from '@entities/favorite';
+import { useNav } from '@shared/hooks';
 
 interface HistoryCardProps {
   favorite: Favorite;
@@ -25,7 +24,7 @@ const FavoriteCard: React.FC<HistoryCardProps> = ({
 }) => {
   const favoriteMovie = useFavoriteMovie(favorite.kinopoiskId);
   const isFavorite = useIsFavorite(favorite.kinopoiskId);
-  const [, setSearchParams] = useSearchParams();
+  const nav = useNav();
 
   const [date, prevDate] = useMemo(
     () => [
@@ -44,12 +43,7 @@ const FavoriteCard: React.FC<HistoryCardProps> = ({
         </div>
       )}
       <Card
-        onClick={() =>
-          setSearchParams({
-            dialog: DialogTypes.PREVIEW,
-            kinopoisk_id: favorite.kinopoiskId.toString(),
-          })
-        }
+        onClick={() => nav.to.film(favoriteMovie.kinopoiskId)}
         rating={favoriteMovie?.ratingKinopoisk?.toString()}
         description={
           <>

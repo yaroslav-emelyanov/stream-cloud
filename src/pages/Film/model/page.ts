@@ -1,4 +1,4 @@
-import { sample } from 'effector';
+import { guard } from 'effector';
 import { createGate } from 'effector-react';
 
 import {
@@ -10,8 +10,10 @@ import {
 
 export const Page = createGate<{ kinopoiskId?: string }>('film-page');
 
-sample({
-  clock: Page.open,
-  fn: (params) => params.kinopoiskId,
+const $kinopoiskId = Page.state.map((params) => params?.kinopoiskId);
+
+guard({
+  clock: $kinopoiskId,
+  filter: Boolean,
   target: [getFilmFx, getFilmTrailerFx, getSimilarFilmsFx, getIframeSrcFx],
 });

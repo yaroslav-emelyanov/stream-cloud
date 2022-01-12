@@ -10,8 +10,6 @@ export const YOUTUBE_REGEX =
 export enum DialogTypes {
   LOGIN = 'login',
   REGISTERATION = 'registration',
-  PREVIEW = 'preview',
-  WATCH = 'watch',
 }
 
 export const FIREBASE_ERROR_MESSAGES: Record<string, string> = {

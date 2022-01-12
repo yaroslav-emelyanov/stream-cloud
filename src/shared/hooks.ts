@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { DialogTypes } from './constants';
 
 export const useDialogState = (key: string, delay: number) => {
   const [dialogKey, setDialogKey] = useState('');
@@ -25,4 +26,26 @@ export const useDialogState = (key: string, delay: number) => {
     key: dialogKey || '',
     onClose: () => setSearch({}),
   };
+};
+
+export const useNav = () => {
+  const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  return useMemo(
+    () => ({
+      to: {
+        film: (kinopoiskId?: string | number | null) =>
+          navigate(`/film/${kinopoiskId}`),
+      },
+      back: () => navigate(-1),
+      open: {
+        login: () => setSearchParams({ dialog: DialogTypes.LOGIN }),
+        registeration: () =>
+          setSearchParams({ dialog: DialogTypes.REGISTERATION }),
+      },
+      close: () => setSearchParams({}),
+    }),
+    [navigate, setSearchParams]
+  );
 };

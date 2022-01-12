@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import Card from '@components/Card';
 
+import { useNav } from '@shared/hooks';
 import { Premier } from '@entities/premier';
-import { DialogTypes } from '@shared/constants';
 import { likeFilm, useIsFavorite } from '@entities/favorite';
 
 interface MainPageProps {
@@ -13,7 +12,7 @@ interface MainPageProps {
 
 const MainCard: React.FC<MainPageProps> = ({ premier }) => {
   const isFavorite = useIsFavorite(premier.kinopoiskId.toString());
-  const [, setSearchParams] = useSearchParams();
+  const nav = useNav();
 
   const genre = premier?.genres[0]?.genre;
 
@@ -30,12 +29,7 @@ const MainCard: React.FC<MainPageProps> = ({ premier }) => {
 
   return (
     <Card
-      onClick={() => {
-        setSearchParams({
-          dialog: DialogTypes.PREVIEW,
-          kinopoisk_id: premier.kinopoiskId.toString(),
-        });
-      }}
+      onClick={() => nav.to.film(premier.kinopoiskId)}
       onClickIcon={() => likeFilm(premier.kinopoiskId.toString())}
       posterUrl={premier.posterUrlPreview}
       key={premier.kinopoiskId}
